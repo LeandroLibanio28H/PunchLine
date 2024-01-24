@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://cn1fqr1sl4j8t"]
+
+[ext_resource type="Script" path="res://src/Entities/PlayerCharacter.cs" id="1_egtud"]
+[ext_resource type="Texture2D" uid="uid://dy13wxahxdrdw" path="res://icon.svg" id="1_g5e6j"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xoikf"]
+radius = 32.0
+height = 128.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4cj6"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fc4yq"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bkdw0"]
+radius = 24.0
+
+[node name="PlayerCharacter" type="CharacterBody2D" node_paths=PackedStringArray("_topHitbox", "_bottomHitbox") groups=["Player1"]]
+script = ExtResource("1_egtud")
+_topHitbox = NodePath("Sensor/Hitbox/TopCollision")
+_bottomHitbox = NodePath("Sensor/Hitbox/BottomCollision")
+_moveSpeed = 200.0
+_jumpStrength = -800.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -52)
+shape = SubResource("CapsuleShape2D_xoikf")
+
+[node name="Mesh" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Mesh"]
+position = Vector2(0, -52)
+scale = Vector2(0.5, 1)
+texture = ExtResource("1_g5e6j")
+
+[node name="Sensor" type="Node2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="Sensor"]
+
+[node name="TopCollision" type="CollisionShape2D" parent="Sensor/Hitbox"]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_r4cj6")
+
+[node name="BottomCollision" type="CollisionShape2D" parent="Sensor/Hitbox"]
+position = Vector2(0, -84)
+shape = SubResource("RectangleShape2D_fc4yq")
+
+[node name="Microphone" type="Area2D" parent="Sensor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor/Microphone"]
+position = Vector2(0, -86)
+shape = SubResource("CircleShape2D_bkdw0")

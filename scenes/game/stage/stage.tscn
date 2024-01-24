@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://k4x5lmkf307o"]
+
+[ext_resource type="Texture2D" uid="uid://u4v53wabg8vx" path="res://scenes/game/stage/textures/stagePlaceholder.png" id="1_srfog"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbvqj"]
+size = Vector2(1300, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7ya3"]
+size = Vector2(64, 720)
+
+[node name="Stage" type="Node2D"]
+y_sort_enabled = true
+
+[node name="BG" type="Sprite2D" parent="."]
+texture = ExtResource("1_srfog")
+centered = false
+
+[node name="StageCollision" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StageCollision"]
+position = Vector2(640, 524)
+shape = SubResource("RectangleShape2D_tbvqj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StageCollision"]
+position = Vector2(112, 356)
+shape = SubResource("RectangleShape2D_s7ya3")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StageCollision"]
+position = Vector2(1180, 356)
+shape = SubResource("RectangleShape2D_s7ya3")

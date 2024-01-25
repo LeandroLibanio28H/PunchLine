@@ -15,6 +15,9 @@ public static class NodeExtension
 
     public static T GetSibling<T>(this Node node, int idx) where T : Node =>
         (T)node.GetParent().GetChild(idx);
+    
+    public static T GetSibling<T>(this Node node, string nodeName) where T : Node =>
+        (T)node.GetParent().GetNode(nodeName);
 
     public static T GetNode<T>(this Node node) where T : Node =>
         node.GetNode<T>(typeof(T).Name);

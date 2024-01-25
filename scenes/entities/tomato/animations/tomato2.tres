@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://d0a0nrng3rjui"]
+
+[ext_resource type="Texture2D" uid="uid://35gp1p76mab6" path="res://scenes/entities/tomato/textures/tomato2.png" id="1_o2vhi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bfwm"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1rk0"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbv2j"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_roc6f"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxbyr"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uihn2"]
+atlas = ExtResource("1_o2vhi")
+region = Rect2(160, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bfwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1rk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbv2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_roc6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxbyr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uihn2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

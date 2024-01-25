@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpmk5gl4xq75d"]
+
+[ext_resource type="Script" path="res://src/Systems/TomatoesSpawner.cs" id="1_aj1s6"]
+[ext_resource type="PackedScene" uid="uid://chwr1dxv1h2if" path="res://scenes/entities/tomato/tomato.tscn" id="2_qflxr"]
+
+[sub_resource type="Curve2D" id="Curve2D_0b54q"]
+_data = {
+"points": PackedVector2Array(-200.296, 32.4679, 200.296, -32.4679, 296.95, 909.817, -110.508, 81.6935, 110.508, -81.6935, 961, 943, 0, 0, 0, 0, 614.657, 939.143, -39.7232, 128.718, 39.7232, -128.718, 297.084, 906.521)
+}
+point_count = 4
+
+[node name="TomatoesSpawner" type="Path2D" node_paths=PackedStringArray("_spawnPoint", "_timer")]
+position = Vector2(0, -101)
+scale = Vector2(1.07377, 1.01156)
+curve = SubResource("Curve2D_0b54q")
+script = ExtResource("1_aj1s6")
+_tomatoScene = ExtResource("2_qflxr")
+_spawnPoint = NodePath("SpawnLocation")
+_timer = NodePath("Timer")
+
+[node name="SpawnLocation" type="PathFollow2D" parent="."]
+position = Vector2(296.95, 909.817)
+rotation = -0.160702
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true

@@ -1,0 +1,84 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://dyjgbdtq1k55l"]
+
+[ext_resource type="Texture2D" uid="uid://bvuokpx6twcjp" path="res://scenes/entities/player/textures/hilario.png" id="1_ogi06"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_72ow0"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(0, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hi271"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(80, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idwde"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(160, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uhva"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(240, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_desp1"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(320, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trf7n"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(400, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj5ar"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(480, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_av03i"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(560, 0, 80, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdlgj"]
+atlas = ExtResource("1_ogi06")
+region = Rect2(640, 0, 80, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_72ow0")
+}],
+"loop": true,
+"name": &"chair",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hi271")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idwde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uhva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_desp1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trf7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yj5ar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_av03i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdlgj")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]

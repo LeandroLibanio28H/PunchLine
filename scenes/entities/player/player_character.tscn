@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cn1fqr1sl4j8t"]
+[gd_scene load_steps=11 format=3 uid="uid://cn1fqr1sl4j8t"]
 
 [ext_resource type="Script" path="res://src/Entities/PlayerCharacter.cs" id="1_egtud"]
-[ext_resource type="Texture2D" uid="uid://dy13wxahxdrdw" path="res://icon.svg" id="1_g5e6j"]
+[ext_resource type="SpriteFrames" uid="uid://dlby5p2ujgxug" path="res://scenes/entities/player/animations/casado.tres" id="2_vg5ju"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xoikf"]
 radius = 32.0
@@ -14,12 +14,71 @@ size = Vector2(64, 64)
 size = Vector2(64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bkdw0"]
-radius = 24.0
+radius = 12.0
 
-[node name="PlayerCharacter" type="CharacterBody2D" node_paths=PackedStringArray("_topHitbox", "_bottomHitbox") groups=["Player1"]]
+[sub_resource type="Animation" id="Animation_dq1gg"]
+resource_name = "blink"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(0.294118, 0.294118, 0.294118, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f6xjq"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gnok2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x3y60"]
+_data = {
+"RESET": SubResource("Animation_gnok2"),
+"blink": SubResource("Animation_dq1gg"),
+"default": SubResource("Animation_f6xjq")
+}
+
+[node name="PlayerCharacter" type="CharacterBody2D" node_paths=PackedStringArray("_topHitbox", "_bottomHitbox", "_animSprite", "_animPlayer", "_microphoneSensor", "_controlTimer")]
+collision_layer = 2
 script = ExtResource("1_egtud")
 _topHitbox = NodePath("Sensor/Hitbox/TopCollision")
 _bottomHitbox = NodePath("Sensor/Hitbox/BottomCollision")
+_animSprite = NodePath("Mesh/AnimatedSprite2D")
+_animPlayer = NodePath("AnimationPlayer")
+_microphoneSensor = NodePath("Sensor/Microphone")
+_controlTimer = NodePath("TomatoStun")
 _moveSpeed = 200.0
 _jumpStrength = -800.0
 
@@ -29,14 +88,17 @@ shape = SubResource("CapsuleShape2D_xoikf")
 
 [node name="Mesh" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="Mesh"]
-position = Vector2(0, -52)
-scale = Vector2(0.5, 1)
-texture = ExtResource("1_g5e6j")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mesh"]
+position = Vector2(0, -56)
+sprite_frames = ExtResource("2_vg5ju")
+animation = &"walk"
+autoplay = "chair"
 
 [node name="Sensor" type="Node2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="Sensor"]
+collision_layer = 32
+collision_mask = 8
 
 [node name="TopCollision" type="CollisionShape2D" parent="Sensor/Hitbox"]
 position = Vector2(0, -20)
@@ -47,7 +109,18 @@ position = Vector2(0, -84)
 shape = SubResource("RectangleShape2D_fc4yq")
 
 [node name="Microphone" type="Area2D" parent="Sensor"]
+collision_layer = 16
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor/Microphone"]
 position = Vector2(0, -86)
 shape = SubResource("CircleShape2D_bkdw0")
+
+[node name="TomatoStun" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x3y60")
+}
+autoplay = "default"

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using GodotUtilities.Logic;
 
@@ -5,17 +6,31 @@ namespace PunchLine.Entities;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
+	public enum PlayerStates
+	{
+		Default,
+		Microphone,
+		UnderControl
+	}
+	
 	[Export] private CollisionShape2D _topHitbox;
 	[Export] private CollisionShape2D _bottomHitbox;
+	[Export] private AnimatedSprite2D _animSprite;
+	[Export] private AnimationPlayer _animPlayer;
+	[Export] private Area2D _microphoneSensor;
+	[Export] private Timer _controlTimer;
 	[Export] private float _moveSpeed;
 	[Export] private float _jumpStrength;
 	
 	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-	private string _playerCode;
+	public string PlayerCode { get; private set; }
+	private string[] _playerCharacters = new[] { "casado", "hilario" };
+
+	private RandomNumberGenerator _randomNumberGenerator;
 
 	#region Flags
 
-	private bool _canJump = false;
+	private bool _canJump;
 
 	#endregion
 
@@ -24,14 +39,25 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	public override void _Ready()
 	{
+		_controlTimer.Timeout += () =>
+		{
+			_stateMachine.ChangeState(DefaultState);
+		};
+		_randomNumberGenerator = new RandomNumberGenerator();
+		_randomNumberGenerator.Randomize();
 		_stateMachine = new DelegateStateMachine();
 		_stateMachine.AddStates(DefaultState);
 		_stateMachine.AddStates(MicrophoneState);
-		_stateMachine.AddStates(UnderControllState);
+		_stateMachine.AddStates(UnderControlState, EnterUnderControlState, LeaveUnderControlState);
 		
 		_stateMachine.SetInitialState(DefaultState);
 		
-		_playerCode = IsInGroup("Player1") ? "p1_" : "p2_";
+		PlayerCode = IsInGroup("Player1") ? "p1_" : "p2_";
+		_animSprite.SpriteFrames =
+			GD.Load(
+					$"res://scenes/entities/player/animations/{_playerCharacters[_randomNumberGenerator.RandiRange(0, _playerCharacters.Length - 1)]}.tres")
+				as SpriteFrames;
+		_animSprite.FlipH = IsInGroup("Player2");
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -43,7 +69,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 		else
 			_canJump = false;
-		if (Input.IsActionJustPressed(_playerCode + "jump"))
+		if (Input.IsActionJustPressed(PlayerCode + "jump"))
 		{
 			if (IsOnFloor() && !_canJump) 
 			{
@@ -56,8 +82,8 @@ public partial class PlayerCharacter : CharacterBody2D
 				_canJump = false;
 			}
 		}
-		var direction = Input.GetActionStrength(_playerCode + "move_right") - 
-		                Input.GetActionStrength(_playerCode + "move_left");
+		var direction = Input.GetActionStrength(PlayerCode + "move_right") - 
+		                Input.GetActionStrength(PlayerCode + "move_left");
 		if (direction != 0.0f)
 			velocity.X = direction * _moveSpeed;
 		else
@@ -67,11 +93,38 @@ public partial class PlayerCharacter : CharacterBody2D
 		_stateMachine.Update();
 	}
 
+	public void ChangeState(PlayerStates state)
+	{
+		switch (state)
+		{
+			case PlayerStates.Default:
+				_stateMachine.ChangeState(DefaultState);
+				break;
+			case PlayerStates.Microphone:
+				_stateMachine.ChangeState(MicrophoneState);
+				break;
+			case PlayerStates.UnderControl:
+				_stateMachine.ChangeState(UnderControlState);
+				break;
+			default:
+				throw new ArgumentOutOfRangeException(nameof(state), state, null);
+		}
+	}
 
 	#region States
 	// Default State
 	private void DefaultState()
 	{
+		if (IsOnFloor())
+		{
+			_animSprite.FlipH = Velocity.X switch
+			{
+				< 0.0f => true,
+				> 0.0f => false,
+				_ => _animSprite.FlipH
+			};
+			_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+		}
 		MoveAndSlide();
 	}
 	
@@ -82,9 +135,39 @@ public partial class PlayerCharacter : CharacterBody2D
 	}
 	
 	// UnderControll
-	private void UnderControllState()
+	private void EnterUnderControlState()
 	{
+		_animPlayer.Play("blink");
+		_topHitbox.Disabled = true;
+		_bottomHitbox.Disabled = true;
+		_microphoneSensor.Monitorable = false;
+		_microphoneSensor.Monitoring = false;
 		
+		_controlTimer.Start();
+	}
+	private void UnderControlState()
+	{
+		if (IsOnFloor())
+		{
+			_animSprite.FlipH = Velocity.X switch
+			{
+				< 0.0f => true,
+				> 0.0f => false,
+				_ => _animSprite.FlipH
+			};
+			_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+		}
+		MoveAndSlide();
+	}
+
+	private void LeaveUnderControlState()
+	{
+		_animPlayer.Play("default");
+		_topHitbox.Disabled = false;
+		_bottomHitbox.Disabled = false;	
+		
+		_microphoneSensor.Monitorable = true;
+		_microphoneSensor.Monitoring = true;
 	}
 	#endregion
 }

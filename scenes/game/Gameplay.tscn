@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfapy2gpq6m55"]
+[gd_scene load_steps=6 format=3 uid="uid://bfapy2gpq6m55"]
 
 [ext_resource type="PackedScene" uid="uid://bylpfd1dkg0v7" path="res://scenes/ui/hud/game_hud.tscn" id="1_ixya8"]
 [ext_resource type="PackedScene" uid="uid://k4x5lmkf307o" path="res://scenes/game/stage/stage.tscn" id="2_xn25o"]
-[ext_resource type="PackedScene" uid="uid://brrwe3veixhjv" path="res://scenes/entities/microphone.tscn" id="3_6dd42"]
+[ext_resource type="PackedScene" uid="uid://brrwe3veixhjv" path="res://scenes/entities/microphone/microphone.tscn" id="3_6dd42"]
 [ext_resource type="PackedScene" uid="uid://cn1fqr1sl4j8t" path="res://scenes/entities/player/player_character.tscn" id="4_ysacp"]
+[ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="5_ypw2r"]
 
 [node name="Gameplay" type="Node2D"]
 
@@ -16,5 +17,14 @@
 [node name="Microphone" parent="Stage" instance=ExtResource("3_6dd42")]
 position = Vector2(635, 503)
 
-[node name="PlayerCharacter" parent="Stage" instance=ExtResource("4_ysacp")]
+[node name="Props" type="Node2D" parent="Stage"]
+
+[node name="Players" type="Node2D" parent="Stage"]
+
+[node name="PlayerCharacter" parent="Stage/Players" groups=["Player1"] instance=ExtResource("4_ysacp")]
 position = Vector2(198, 471)
+
+[node name="PlayerCharacter2" parent="Stage/Players" groups=["Player2"] instance=ExtResource("4_ysacp")]
+position = Vector2(1108, 474)
+
+[node name="TomatoesSpawnPoint" parent="." instance=ExtResource("5_ypw2r")]

@@ -1,5 +1,4 @@
 using Godot;
-using GodotUtilities.Extensions;
 
 namespace PunchLine.Entities;
 
@@ -23,7 +22,7 @@ public partial class Tomato : Area2D
     public override void _Ready()
     {
         AreaEntered += OnHit;
-        _killerSensor.AreaEntered += area2D =>
+        _killerSensor.AreaEntered += _ =>
         {
             QueueFree();
         };

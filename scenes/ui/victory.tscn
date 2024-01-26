@@ -1,0 +1,234 @@
+[gd_scene load_steps=13 format=3 uid="uid://cile035al6b3o"]
+
+[ext_resource type="SpriteFrames" uid="uid://dlby5p2ujgxug" path="res://scenes/entities/player/animations/casado.tres" id="1_b7diy"]
+[ext_resource type="Script" path="res://src/Hud/Victory.cs" id="1_jdodh"]
+[ext_resource type="Texture2D" uid="uid://w1hu1mclnxvb" path="res://scenes/game/stage/textures/stage_wall.png" id="4_58hng"]
+[ext_resource type="Texture2D" uid="uid://cadwm14lk70p8" path="res://scenes/game/stage/textures/stage_curtain.png" id="4_maqjl"]
+[ext_resource type="Texture2D" uid="uid://yy3qddd6vo4a" path="res://scenes/game/stage/textures/stage_ground.png" id="5_0qp5r"]
+[ext_resource type="SpriteFrames" uid="uid://dyjgbdtq1k55l" path="res://scenes/entities/player/animations/hilario.tres" id="6_0do5q"]
+[ext_resource type="Texture2D" uid="uid://btcpaxk7ta8lx" path="res://scenes/game/stage/textures/stage_spectators.png" id="6_ow7ey"]
+[ext_resource type="Texture2D" uid="uid://qc82260tth0p" path="res://scenes/entities/microphone/textures/microphone.png" id="7_r7cnb"]
+[ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="9_ta41r"]
+
+[sub_resource type="Animation" id="Animation_hoppw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Curtains/CurtainLeft:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Curtains/CurtainRight:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(640, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Stage/TomatoesSpawner:Paused")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_viwwh"]
+resource_name = "open"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Curtains/CurtainLeft:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-572, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Curtains/CurtainRight:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(640, 0), Vector2(640, 0), Vector2(1212, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Stage/TomatoesSpawner:Paused")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hnwxr"]
+_data = {
+"RESET": SubResource("Animation_hoppw"),
+"open": SubResource("Animation_viwwh")
+}
+
+[node name="Victory" type="CanvasLayer" node_paths=PackedStringArray("_uiNode", "_player1", "_player2", "_tomatoes", "_title")]
+script = ExtResource("1_jdodh")
+_uiNode = NodePath("UI")
+_player1 = NodePath("Stage/Player1")
+_player2 = NodePath("Stage/Player2")
+_tomatoes = NodePath("Stage/TomatoesSpawner")
+_title = NodePath("UI/Win/Label")
+
+[node name="Stage" type="Node2D" parent="."]
+
+[node name="Wall" type="Sprite2D" parent="Stage" groups=["Props"]]
+position = Vector2(64, 0)
+texture = ExtResource("4_58hng")
+centered = false
+
+[node name="Platform" type="Sprite2D" parent="Stage"]
+position = Vector2(640, 552)
+texture = ExtResource("5_0qp5r")
+
+[node name="Player1" type="AnimatedSprite2D" parent="Stage"]
+position = Vector2(324, 424)
+sprite_frames = ExtResource("1_b7diy")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Player2" type="AnimatedSprite2D" parent="Stage"]
+position = Vector2(388, 424)
+sprite_frames = ExtResource("6_0do5q")
+animation = &"idle"
+autoplay = "idle"
+flip_h = true
+
+[node name="Microphone" type="Sprite2D" parent="Stage" groups=["MicrophoneDraw"]]
+position = Vector2(352, 452)
+texture = ExtResource("7_r7cnb")
+
+[node name="TomatoesSpawner" parent="Stage" instance=ExtResource("9_ta41r")]
+position = Vector2(-96, -136)
+_group = "MicrophoneDraw"
+_spawnTime = 0.2
+
+[node name="Audience" type="Sprite2D" parent="Stage"]
+position = Vector2(640, 672)
+texture = ExtResource("6_ow7ey")
+
+[node name="Audience2" type="Sprite2D" parent="Stage/Audience"]
+position = Vector2(0, -40)
+texture = ExtResource("6_ow7ey")
+
+[node name="Curtains" type="Node2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="CurtainLeft" type="Sprite2D" parent="Curtains"]
+texture = ExtResource("4_maqjl")
+centered = false
+
+[node name="CurtainRight" type="Sprite2D" parent="Curtains"]
+position = Vector2(640, 0)
+texture = ExtResource("4_maqjl")
+centered = false
+
+[node name="UI" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Win" type="Control" parent="UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/Win"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 18.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.635294, 0.0901961, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 64
+text = "Our Winner of the Night!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/Win"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -69.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.996078, 0.941176, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 48
+text = "Press Any Key to reset the game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hnwxr")
+}
+autoplay = "open"

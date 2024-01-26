@@ -1,0 +1,134 @@
+[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://c1t357s6lkn2v"]
+
+[ext_resource type="Texture2D" uid="uid://d1ei1ngnryfta" path="res://scenes/ui/hud/textures/countdown/copa100000.png" id="1_vuhbi"]
+[ext_resource type="Texture2D" uid="uid://cfjtge58q458s" path="res://scenes/ui/hud/textures/countdown/copa100001.png" id="2_6fm2p"]
+[ext_resource type="Texture2D" uid="uid://dsc780ud2ru7a" path="res://scenes/ui/hud/textures/countdown/copa100002.png" id="3_rr5xe"]
+[ext_resource type="Texture2D" uid="uid://3gikorcndle3" path="res://scenes/ui/hud/textures/countdown/copa100003.png" id="4_tra72"]
+[ext_resource type="Texture2D" uid="uid://bt7n30atlebcn" path="res://scenes/ui/hud/textures/countdown/copa100004.png" id="5_p0m5p"]
+[ext_resource type="Texture2D" uid="uid://3kr2q5v032er" path="res://scenes/ui/hud/textures/countdown/copa100005.png" id="6_7ud36"]
+[ext_resource type="Texture2D" uid="uid://g18po46j8qbq" path="res://scenes/ui/hud/textures/countdown/copa100006.png" id="7_8s2ur"]
+[ext_resource type="Texture2D" uid="uid://dimffdinnltnx" path="res://scenes/ui/hud/textures/countdown/copa100007.png" id="8_hxc45"]
+[ext_resource type="Texture2D" uid="uid://u4vwosdgec2n" path="res://scenes/ui/hud/textures/countdown/copa100008.png" id="9_culoo"]
+[ext_resource type="Texture2D" uid="uid://jebao7bbbkb4" path="res://scenes/ui/hud/textures/countdown/copa100009.png" id="10_c72gb"]
+[ext_resource type="Texture2D" uid="uid://cenhpqu5nw0di" path="res://scenes/ui/hud/textures/countdown/copa100010.png" id="11_spny6"]
+[ext_resource type="Texture2D" uid="uid://b2qau2s657722" path="res://scenes/ui/hud/textures/countdown/copa100011.png" id="12_afpfj"]
+[ext_resource type="Texture2D" uid="uid://c7g853jvm57v7" path="res://scenes/ui/hud/textures/countdown/copa100012.png" id="13_01jfm"]
+[ext_resource type="Texture2D" uid="uid://d0ncto361dccb" path="res://scenes/ui/hud/textures/countdown/copa100013.png" id="14_g38ju"]
+[ext_resource type="Texture2D" uid="uid://dcy0red5af6pr" path="res://scenes/ui/hud/textures/countdown/copa100014.png" id="15_5bk1a"]
+[ext_resource type="Texture2D" uid="uid://dfmqvt4g3cycf" path="res://scenes/ui/hud/textures/countdown/copa100015.png" id="16_xsrut"]
+[ext_resource type="Texture2D" uid="uid://ctlio4de7ockw" path="res://scenes/ui/hud/textures/countdown/copa100016.png" id="17_2vn34"]
+[ext_resource type="Texture2D" uid="uid://dkpnrmtqwk0el" path="res://scenes/ui/hud/textures/countdown/copa100017.png" id="18_pjsg0"]
+[ext_resource type="Texture2D" uid="uid://b8xr8af5yau7b" path="res://scenes/ui/hud/textures/countdown/copa100018.png" id="19_xrhff"]
+[ext_resource type="Texture2D" uid="uid://bhda3ijym71k6" path="res://scenes/ui/hud/textures/countdown/copa100019.png" id="20_rgaog"]
+[ext_resource type="Texture2D" uid="uid://x18hwg0cr6cg" path="res://scenes/ui/hud/textures/countdown/copa100020.png" id="21_4q65y"]
+[ext_resource type="Texture2D" uid="uid://bfyf2bt2ahn0p" path="res://scenes/ui/hud/textures/countdown/copa100021.png" id="22_init8"]
+[ext_resource type="Texture2D" uid="uid://c0lm7i74uv4q5" path="res://scenes/ui/hud/textures/countdown/copa100022.png" id="23_tgbj1"]
+[ext_resource type="Texture2D" uid="uid://d3w2qscpcdilg" path="res://scenes/ui/hud/textures/countdown/copa100023.png" id="24_3bft8"]
+[ext_resource type="Texture2D" uid="uid://byu5fbbjkg270" path="res://scenes/ui/hud/textures/countdown/copa100024.png" id="25_4gbtp"]
+[ext_resource type="Texture2D" uid="uid://o2enjl38nat2" path="res://scenes/ui/hud/textures/countdown/copa100025.png" id="26_ksemb"]
+[ext_resource type="Texture2D" uid="uid://bec3ag7swmd38" path="res://scenes/ui/hud/textures/countdown/copa100026.png" id="27_71ygf"]
+[ext_resource type="Texture2D" uid="uid://dx2mhhxvilr5b" path="res://scenes/ui/hud/textures/countdown/copa100027.png" id="28_uhbpt"]
+[ext_resource type="Texture2D" uid="uid://cbh7vixk33uav" path="res://scenes/ui/hud/textures/countdown/copa100028.png" id="29_kfy2v"]
+[ext_resource type="Texture2D" uid="uid://b2wob0wi7f6rn" path="res://scenes/ui/hud/textures/countdown/copa100029.png" id="30_dxtqy"]
+[ext_resource type="Texture2D" uid="uid://cqjxt03ws0ai5" path="res://scenes/ui/hud/textures/countdown/copa100030.png" id="31_aul3y"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vuhbi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6fm2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rr5xe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tra72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p0m5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7ud36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8s2ur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hxc45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_culoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_c72gb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_spny6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_afpfj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_01jfm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_g38ju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_5bk1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_xsrut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_2vn34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_pjsg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_xrhff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_rgaog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_4q65y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_init8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_tgbj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_3bft8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_4gbtp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ksemb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_71ygf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_uhbpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_kfy2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_dxtqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_aul3y")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]

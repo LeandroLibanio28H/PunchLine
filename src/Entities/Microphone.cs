@@ -1,5 +1,8 @@
 ﻿using Godot;
 using Godot.Collections;
+using GodotUtilities.Extensions;
+using PunchLine.Autoload;
+using PunchLine.Systems;
 
 namespace PunchLine.Entities;
 
@@ -8,6 +11,8 @@ public partial class Microphone : Node2D
     [Export] private Area2D _sensor;
     [Export] private Area2D _tomatoKiller;
     [Export] private TextureRect _buttonPanel;
+    [Export] private TextureRect _borderPanel;
+    [Export] private TomatoesSpawner _tomatoesSpawner;
     private bool _active = true;
 
     private string[] _quickTimeEventActions = new[] { "special_a", "special_b" };
@@ -15,11 +20,13 @@ public partial class Microphone : Node2D
     private PlayerCharacter _currentPlayerCharacter;
     private string _currentActionListening = string.Empty;
     private Dictionary<string, Texture2D> _keyTextures;
+    private AttentionController _attentionController;
 
     private RandomNumberGenerator _randomNumberGenerator;
 
     public override void _Ready()
     {
+        _attentionController = GetNode<AttentionController>("/root/AttentionController");
         _keyTextures = new Dictionary<string, Texture2D>();
         foreach (var key in _quickTimeEventActions)
         {
@@ -34,6 +41,7 @@ public partial class Microphone : Node2D
         _tomatoKiller.AreaEntered += OnTomatoKillerEntered;
         _randomNumberGenerator = new RandomNumberGenerator();
         _randomNumberGenerator.Randomize();
+        _borderPanel.Hide();
         SetProcessUnhandledInput(false);
     }
 
@@ -42,14 +50,14 @@ public partial class Microphone : Node2D
         if (_currentPlayerCharacter is null || !@event.IsPressed()) return;
         if (@event.IsAction(_currentActionListening))
         {
-            // TODO: Score
+            _attentionController.Score(10.0f * (_currentPlayerCharacter.PlayerCode == "p1_" ? 1.0f : -1.0f));
             
             ChangeCurrentActionListening();
         }
         else if (@event.IsAction(_currentPlayerCharacter.PlayerCode + "special_a") ||
                  @event.IsAction(_currentPlayerCharacter.PlayerCode + "special_b"))
         {
-            // TODO: Failed
+            RemoveShield();
             
             StopQuickTimeEvent();
         }
@@ -60,8 +68,10 @@ public partial class Microphone : Node2D
         if (!_active || area2D.Owner is not PlayerCharacter playerCharacter) return;
         
         _currentPlayerCharacter = playerCharacter;
+        _currentPlayerCharacter.ChangeState(PlayerCharacter.PlayerStates.Microphone);
         _active = false;
         
+        _attentionController.StopDrainingPoints();
         StartQuickTimeEvent();
     }
     
@@ -70,13 +80,17 @@ public partial class Microphone : Node2D
         if (_active || area2D.Owner is not PlayerCharacter playerCharacter) return;
         if (_currentPlayerCharacter != playerCharacter) return;
         
+        if (_currentPlayerCharacter.GetState() == PlayerCharacter.PlayerStates.Microphone)
+            _currentPlayerCharacter.ChangeState(PlayerCharacter.PlayerStates.Default);
+        
         _currentPlayerCharacter = null;
         _active = true;
         
+        _attentionController.DrainPoints();
         StopQuickTimeEvent();
     }
 
-    private void OnTomatoKillerEntered(Area2D area2D)
+    private static void OnTomatoKillerEntered(Area2D area2D)
     {
         if (area2D is not Tomato tomato) return;
         
@@ -94,6 +108,7 @@ public partial class Microphone : Node2D
         SetProcessUnhandledInput(false);
         _currentActionListening = string.Empty;
         _buttonPanel.Texture = null;
+        _borderPanel.Hide();
     }
 
     private void ChangeCurrentActionListening()
@@ -101,6 +116,20 @@ public partial class Microphone : Node2D
         _currentActionListening = _currentPlayerCharacter.PlayerCode +
             _quickTimeEventActions[_randomNumberGenerator.RandiRange(0, _quickTimeEventActions.Length - 1)];
 
+        _borderPanel.Show();
         _buttonPanel.Texture = _keyTextures[_currentActionListening];
+    }
+
+    public void RemoveShield()
+    {
+        _tomatoKiller.DisableArea();
+        _sensor.DisableArea();
+        _tomatoesSpawner.Paused = false;
+        GetTree().CreateTimer(3.5).Timeout += () =>
+        {
+            _tomatoKiller.EnableArea();
+            _sensor.EnableArea();
+            _tomatoesSpawner.Paused = true;
+        };
     }
 }

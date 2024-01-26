@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d03tgt58jw310"]
+
+[ext_resource type="Texture2D" uid="uid://cja3o6hrlxwi" path="res://scenes/game/stage/textures/chair.png" id="1_rgqgy"]
+
+[node name="Chair" type="Node2D" groups=["Chair"]]
+position = Vector2(184, 424)
+
+[node name="Mesh" type="Sprite2D" parent="."]
+texture = ExtResource("1_rgqgy")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(8, 24)

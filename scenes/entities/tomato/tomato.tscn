@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://chwr1dxv1h2if"]
+[gd_scene load_steps=6 format=3 uid="uid://chwr1dxv1h2if"]
 
 [ext_resource type="Script" path="res://src/Entities/Tomato.cs" id="1_wlvmn"]
 [ext_resource type="SpriteFrames" uid="uid://vxbwwqc3wncr" path="res://scenes/entities/tomato/animations/tomato1.tres" id="2_e8a2g"]
@@ -7,20 +7,32 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_pldsl"]
 radius = 12.0
 
-[node name="Tomato" type="Area2D" node_paths=PackedStringArray("_animSprite")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26te0"]
+size = Vector2(32, 32)
+
+[node name="Tomato" type="Area2D" node_paths=PackedStringArray("_animSprite", "_killerSensor")]
 collision_layer = 8
 collision_mask = 32
 script = ExtResource("1_wlvmn")
 _animSprite = NodePath("AnimatedSprite2D")
 _splatScene = ExtResource("2_rfusn")
+_killerSensor = NodePath("KillerSensor")
 _minMoveSpeed = 150.0
 _maxMoveSpeed = 250.0
 _minLifeTime = 2.8
 _maxLifeTime = 3.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("2_e8a2g")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pldsl")
+
+[node name="KillerSensor" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillerSensor"]
+shape = SubResource("RectangleShape2D_26te0")

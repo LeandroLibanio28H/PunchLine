@@ -5,9 +5,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_0b54q"]
 _data = {
-"points": PackedVector2Array(-200.296, 32.4679, 200.296, -32.4679, 296.95, 909.817, -110.508, 81.6935, 110.508, -81.6935, 961, 943, 0, 0, 0, 0, 614.657, 939.143, -39.7232, 128.718, 39.7232, -128.718, 297.084, 906.521)
+"points": PackedVector2Array(0, 0, 0, 0, 275.664, 1004.39, 0, 0, 0, 0, 365.069, 980.664, 0, 0, 0, 0, 499.176, 980.664, 0, 0, 0, 0, 603.481, 988.572, 0, 0, 0, 0, 759.939, 1004.39, 0, 0, 0, 0, 879.145, 988.572, 0, 0, 0, 0, 1013.25, 980.664, 0, 0, 0, 0, 1087.76, 1004.39)
 }
-point_count = 4
+point_count = 8
 
 [node name="TomatoesSpawner" type="Path2D" node_paths=PackedStringArray("_spawnPoint", "_timer")]
 position = Vector2(0, -101)
@@ -19,8 +19,8 @@ _spawnPoint = NodePath("SpawnLocation")
 _timer = NodePath("Timer")
 
 [node name="SpawnLocation" type="PathFollow2D" parent="."]
-position = Vector2(296.95, 909.817)
-rotation = -0.160702
+position = Vector2(275.664, 1004.39)
+rotation = -0.259396
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

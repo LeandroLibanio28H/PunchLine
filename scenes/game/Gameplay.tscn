@@ -1,30 +1,136 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfapy2gpq6m55"]
+[gd_scene load_steps=13 format=3 uid="uid://bfapy2gpq6m55"]
 
 [ext_resource type="PackedScene" uid="uid://bylpfd1dkg0v7" path="res://scenes/ui/hud/game_hud.tscn" id="1_ixya8"]
+[ext_resource type="Script" path="res://src/Gameplay/GameController.cs" id="1_rqpg3"]
 [ext_resource type="PackedScene" uid="uid://k4x5lmkf307o" path="res://scenes/game/stage/stage.tscn" id="2_xn25o"]
 [ext_resource type="PackedScene" uid="uid://brrwe3veixhjv" path="res://scenes/entities/microphone/microphone.tscn" id="3_6dd42"]
+[ext_resource type="PackedScene" uid="uid://d03tgt58jw310" path="res://scenes/game/chair/chair.tscn" id="3_w6gis"]
 [ext_resource type="PackedScene" uid="uid://cn1fqr1sl4j8t" path="res://scenes/entities/player/player_character.tscn" id="4_ysacp"]
+[ext_resource type="PackedScene" uid="uid://cwi6qs0gghtt7" path="res://scenes/game/curtains/curtains.tscn" id="5_k55gr"]
 [ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="5_ypw2r"]
+[ext_resource type="Texture2D" uid="uid://btcpaxk7ta8lx" path="res://scenes/game/stage/textures/stage_spectators.png" id="9_8cm3a"]
 
-[node name="Gameplay" type="Node2D"]
+[sub_resource type="Animation" id="Animation_crysn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jq8or"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.294118), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yja2f"]
+_data = {
+"RESET": SubResource("Animation_crysn"),
+"default": SubResource("Animation_jq8or")
+}
+
+[node name="Gameplay" type="Node2D" node_paths=PackedStringArray("_mainMenuLayer", "_hud", "_curtain", "_tomatoesSpawner")]
+process_mode = 3
+script = ExtResource("1_rqpg3")
+_mainMenuLayer = NodePath("MainScreen")
+_hud = NodePath("UI")
+_curtain = NodePath("Stage/Curtains")
+_tomatoesSpawner = NodePath("Stage/TomatoesSpawnPoint")
+
+[node name="MainScreen" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="Control" type="Control" parent="MainScreen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PressAny" type="Label" parent="MainScreen/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -34.5
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.996078, 0.941176, 0.352941, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 64
+text = "Press any key to start the game..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_yja2f")
+}
+autoplay = "default"
 
 [node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="GameHud" parent="UI" instance=ExtResource("1_ixya8")]
 
 [node name="Stage" parent="." instance=ExtResource("2_xn25o")]
+process_mode = 1
+position = Vector2(0, 32)
 
-[node name="Microphone" parent="Stage" instance=ExtResource("3_6dd42")]
-position = Vector2(635, 503)
+[node name="Props" type="Node2D" parent="Stage" groups=["Props"]]
 
-[node name="Props" type="Node2D" parent="Stage"]
+[node name="Chairs" type="Node2D" parent="Stage"]
+
+[node name="Chair" parent="Stage/Chairs" groups=["Left"] instance=ExtResource("3_w6gis")]
+
+[node name="Chair2" parent="Stage/Chairs" groups=["Right"] instance=ExtResource("3_w6gis")]
+position = Vector2(1096, 424)
+scale = Vector2(-1, 1)
 
 [node name="Players" type="Node2D" parent="Stage"]
 
-[node name="PlayerCharacter" parent="Stage/Players" groups=["Player1"] instance=ExtResource("4_ysacp")]
-position = Vector2(198, 471)
+[node name="PlayerCharacter" parent="Stage/Players" groups=["Player", "Player1"] instance=ExtResource("4_ysacp")]
+position = Vector2(192, 448)
 
-[node name="PlayerCharacter2" parent="Stage/Players" groups=["Player2"] instance=ExtResource("4_ysacp")]
-position = Vector2(1108, 474)
+[node name="PlayerCharacter2" parent="Stage/Players" groups=["Player", "Player2"] instance=ExtResource("4_ysacp")]
+position = Vector2(1088, 448)
 
-[node name="TomatoesSpawnPoint" parent="." instance=ExtResource("5_ypw2r")]
+[node name="Microphone" parent="Stage" instance=ExtResource("3_6dd42")]
+position = Vector2(640, 368)
+
+[node name="TomatoesSpawnPoint" parent="Stage" instance=ExtResource("5_ypw2r")]
+process_mode = 1
+position = Vector2(-16, -224)
+_spawnTime = 1.0
+
+[node name="Curtains" parent="Stage" instance=ExtResource("5_k55gr")]
+
+[node name="Audience" type="Sprite2D" parent="."]
+position = Vector2(640, 672)
+texture = ExtResource("9_8cm3a")
+
+[node name="Audience2" type="Sprite2D" parent="Audience"]
+position = Vector2(0, -40)
+texture = ExtResource("9_8cm3a")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqrsrug4v2b7e"]
+
+[ext_resource type="PackedScene" uid="uid://bfapy2gpq6m55" path="res://scenes/game/Gameplay.tscn" id="1_0kkm7"]
+[ext_resource type="Script" path="res://src/MainScene.cs" id="1_332sl"]
+[ext_resource type="PackedScene" uid="uid://cile035al6b3o" path="res://scenes/ui/victory.tscn" id="3_i27mk"]
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_scenes")]
+script = ExtResource("1_332sl")
+_scenes = NodePath("Scenes")
+_gameplayScene = ExtResource("1_0kkm7")
+_victoryScene = ExtResource("3_i27mk")
+
+[node name="Scenes" type="Node" parent="."]

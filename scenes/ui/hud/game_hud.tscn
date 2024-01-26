@@ -1,12 +1,33 @@
-[gd_scene format=3 uid="uid://bylpfd1dkg0v7"]
+[gd_scene load_steps=9 format=3 uid="uid://bylpfd1dkg0v7"]
 
-[node name="GameHud" type="Control"]
+[ext_resource type="Script" path="res://src/Hud/GameHud.cs" id="1_6ol3n"]
+[ext_resource type="Texture2D" uid="uid://crs73jnbe0p3w" path="res://scenes/ui/hud/textures/background_progress_bar.PNG" id="1_7brqu"]
+[ext_resource type="Texture2D" uid="uid://bbdfau7105e41" path="res://scenes/ui/hud/textures/versus_grabber.png" id="2_7l3a7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ni65d"]
+bg_color = Color(0.235294, 0.807843, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxuwh"]
+bg_color = Color(0.384314, 1, 0.384314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnn5g"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tfx6w"]
+texture = ExtResource("2_7l3a7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ixlwb"]
+texture = ExtResource("2_7l3a7")
+
+[node name="GameHud" type="Control" node_paths=PackedStringArray("_progressBar", "_hSlider")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6ol3n")
+_progressBar = NodePath("Content/Bar/ProgressBar")
+_hSlider = NodePath("Content/Bar/HSlider")
 
 [node name="Content" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -20,8 +41,48 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="Attentiometer" type="HSlider" parent="Content"]
-custom_minimum_size = Vector2(0, 32)
+[node name="Bar" type="Control" parent="Content"]
 layout_mode = 2
-size_flags_vertical = 8
+
+[node name="ProgressBar" type="ProgressBar" parent="Content/Bar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 57.0
+offset_top = 5.0
+offset_right = -61.0
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ni65d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_uxuwh")
 value = 50.0
+show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="Content/Bar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+texture = ExtResource("1_7brqu")
+flip_v = true
+
+[node name="HSlider" type="HSlider" parent="Content/Bar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 57.0
+offset_top = 1.0
+offset_right = -61.0
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_icons/grabber = ExtResource("2_7l3a7")
+theme_override_icons/grabber_highlight = ExtResource("2_7l3a7")
+theme_override_icons/grabber_disabled = ExtResource("2_7l3a7")
+theme_override_styles/slider = SubResource("StyleBoxFlat_tnn5g")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_tfx6w")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_ixlwb")
+step = 0.1
+value = 50.0
+editable = false
+scrollable = false

@@ -49,5 +49,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 14.0
 }]

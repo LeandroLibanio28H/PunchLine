@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1kke2ye5ho5"]
+[gd_scene load_steps=9 format=3 uid="uid://c1kke2ye5ho5"]
 
 [ext_resource type="Texture2D" uid="uid://tk0x8i346eb1" path="res://scenes/powerups/textures/cane.png" id="1_p4ikw"]
 [ext_resource type="Script" path="res://src/Powerups/Cane.cs" id="1_ry8mc"]
 [ext_resource type="AudioStream" uid="uid://c2qwjdmd3rmvj" path="res://scenes/powerups/sfx/cane.mp3" id="3_0bnj5"]
+[ext_resource type="Texture2D" uid="uid://c8hq8bowbyvq7" path="res://scenes/powerups/textures/vfx/woosh.PNG" id="3_5yauf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rnpya"]
 radius = 16.0
@@ -26,7 +27,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Cane" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightCane", "_leftCane", "_rightSprite", "_leftSprite", "_audioStreamPlayer")]
+[node name="Cane" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightCane", "_leftCane", "_rightSprite", "_leftSprite", "_audioStreamPlayer", "_vfxRight", "_vfxLeft")]
 script = ExtResource("1_ry8mc")
 _hitboxLeft = NodePath("Left/Area2D")
 _hitboxRight = NodePath("Right/Area2D")
@@ -36,6 +37,8 @@ _rightSprite = NodePath("Right/Player")
 _leftSprite = NodePath("Left/Player")
 _moveSpeed = 500.0
 _audioStreamPlayer = NodePath("AudioStreamPlayer")
+_vfxRight = NodePath("Right/VFX")
+_vfxLeft = NodePath("Left/VFX")
 
 [node name="Left" type="Sprite2D" parent="."]
 position = Vector2(-16, 400)
@@ -54,6 +57,11 @@ sprite_frames = SubResource("SpriteFrames_pjc1y")
 animation = &"walk"
 speed_scale = 3.0
 
+[node name="VFX" type="Sprite2D" parent="Left"]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_5yauf")
+
 [node name="Right" type="Sprite2D" parent="."]
 position = Vector2(1296, 400)
 texture = ExtResource("1_p4ikw")
@@ -71,6 +79,11 @@ shape = SubResource("CircleShape2D_1nw77")
 sprite_frames = SubResource("SpriteFrames_o2xu4")
 animation = &"walk"
 speed_scale = 3.0
+
+[node name="VFX" type="Sprite2D" parent="Right"]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_5yauf")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_0bnj5")

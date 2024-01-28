@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using PunchLine.Autoload;
 using PunchLine.Systems;
 
@@ -12,6 +13,12 @@ public partial class Victory : CanvasLayer
     [Export] private TomatoesSpawner _tomatoes;
     [Export] private TextureRect _winTexture;
     [Export] private TextureRect _loseTexture;
+    [Export] private AudioStreamPlayer _finalJoke;
+    [Export] private AudioStreamPlayer _clap;
+    [Export] private AudioStreamPlayer _boo;
+    
+    [Export] private Array<AudioStream> _p1AudioEnd;
+    [Export] private Array<AudioStream> _p2AudioEnd;
 
     private AttentionController _attentionController;
 
@@ -26,11 +33,15 @@ public partial class Victory : CanvasLayer
                 _player1.Show();
                 _player2.Hide();
                 _tomatoes.QueueFree();
+                _clap.Play();
+                PlayJoke();
                 break;
             case <= 0.0f:
                 _player1.Hide();
                 _player2.Show();
                 _tomatoes.QueueFree();
+                _clap.Play();
+                PlayJoke();
                 break;
             default:
                 _player1.Show();
@@ -39,8 +50,17 @@ public partial class Victory : CanvasLayer
                 _player2.Play("crouch");
                 _winTexture.Hide();
                 _loseTexture.Show();
+                _boo.Play();
                 break;
         }
+    }
+
+    private void PlayJoke()
+    {
+        _attentionController = GetNode<AttentionController>("/root/AttentionController");
+        var audio = _attentionController.Attention >= 100.0f ? _p1AudioEnd.PickRandom() : _p2AudioEnd.PickRandom();
+        _finalJoke.Stream = audio;
+        _finalJoke.Play();
     }
 
 

@@ -1,10 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bfapy2gpq6m55"]
+[gd_scene load_steps=27 format=3 uid="uid://bfapy2gpq6m55"]
 
 [ext_resource type="PackedScene" uid="uid://bylpfd1dkg0v7" path="res://scenes/ui/hud/game_hud.tscn" id="1_ixya8"]
 [ext_resource type="Script" path="res://src/Gameplay/GameController.cs" id="1_rqpg3"]
-[ext_resource type="Texture2D" uid="uid://boy44bcl3eqe" path="res://logo.png" id="2_x1fm6"]
 [ext_resource type="PackedScene" uid="uid://k4x5lmkf307o" path="res://scenes/game/stage/stage.tscn" id="2_xn25o"]
 [ext_resource type="PackedScene" uid="uid://brrwe3veixhjv" path="res://scenes/entities/microphone/microphone.tscn" id="3_6dd42"]
+[ext_resource type="Texture2D" uid="uid://bqsd0opr254m7" path="res://scenes/ui/hud/textures/tutorial.png" id="3_m4o47"]
 [ext_resource type="PackedScene" uid="uid://d03tgt58jw310" path="res://scenes/game/chair/chair.tscn" id="3_w6gis"]
 [ext_resource type="PackedScene" uid="uid://cn1fqr1sl4j8t" path="res://scenes/entities/player/player_character.tscn" id="4_ysacp"]
 [ext_resource type="PackedScene" uid="uid://cwi6qs0gghtt7" path="res://scenes/game/curtains/curtains.tscn" id="5_k55gr"]
@@ -58,7 +58,43 @@ _data = {
 "default": SubResource("Animation_jq8or")
 }
 
-[node name="Gameplay" type="Node2D" node_paths=PackedStringArray("_mainMenuLayer", "_hud", "_curtain", "_tomatoesSpawner", "_powerupSpawner", "_playersNode", "_audioStreamPlayer")]
+[sub_resource type="Animation" id="Animation_r7o7r"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tutorial:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dhhlu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tutorial:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hkjkl"]
+_data = {
+"RESET": SubResource("Animation_dhhlu"),
+"default": SubResource("Animation_r7o7r")
+}
+
+[node name="Gameplay" type="Node2D" node_paths=PackedStringArray("_mainMenuLayer", "_hud", "_curtain", "_tomatoesSpawner", "_powerupSpawner", "_playersNode", "_audioStreamPlayer", "_tutorialAnim")]
 process_mode = 3
 script = ExtResource("1_rqpg3")
 _mainMenuLayer = NodePath("MainScreen")
@@ -68,6 +104,7 @@ _tomatoesSpawner = NodePath("Stage/TomatoesSpawnPoint")
 _powerupSpawner = NodePath("Stage/PowerupSpawner")
 _playersNode = NodePath("Stage/Players")
 _audioStreamPlayer = NodePath("BGS")
+_tutorialAnim = NodePath("MainScreen/TutorialAnimation")
 
 [node name="MainScreen" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -97,17 +134,30 @@ text = "Press any key to start the game..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Logo" type="TextureRect" parent="MainScreen/Control"]
+[node name="Tutorial" type="Control" parent="MainScreen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/Tutorial"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_x1fm6")
+texture = ExtResource("3_m4o47")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MainScreen"]
 libraries = {
 "": SubResource("AnimationLibrary_yja2f")
 }
 autoplay = "default"
+
+[node name="TutorialAnimation" type="AnimationPlayer" parent="MainScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_hkjkl")
+}
 
 [node name="UI" type="CanvasLayer" parent="."]
 visible = false

@@ -8,6 +8,9 @@ public partial class Generator : Node2D
 {
     [Export] private Area2D _hitbox;
     [Export] private float _moveSpeed;
+    [Export] private float _screenShake;
+    [Export] private Texture2D _vfxTexture;
+    [Export] private PackedScene _vfxScene;
 
     private PlayerCharacter _player;
     
@@ -42,7 +45,16 @@ public partial class Generator : Node2D
             QueueFree();
             return;
         }
+        
+        if (_vfxScene.Instantiate() is Vfx vfx)
+        {
+            vfx.Sprite.Texture = _vfxTexture;
+            vfx.GlobalPosition = GlobalPosition;
+            GetParent().AddChild(vfx);
+        }
 
+        var main = GetTree().CurrentScene as MainScene;
+        main?.ApplyCameraShake(_screenShake);
         microphone.GlobalPosition = new Vector2(_player.GlobalPosition.X, microphone.GlobalPosition.Y);
         QueueFree();
     }

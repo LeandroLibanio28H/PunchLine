@@ -1,16 +1,30 @@
-[gd_scene load_steps=15 format=3 uid="uid://cile035al6b3o"]
+[gd_scene load_steps=29 format=3 uid="uid://cile035al6b3o"]
 
 [ext_resource type="SpriteFrames" uid="uid://dlby5p2ujgxug" path="res://scenes/entities/player/animations/casado.tres" id="1_b7diy"]
 [ext_resource type="Script" path="res://src/Hud/Victory.cs" id="1_jdodh"]
+[ext_resource type="AudioStream" uid="uid://ds8q444yvgkja" path="res://scenes/entities/player/audio/end/p1_1.mp3" id="2_ycu4a"]
+[ext_resource type="AudioStream" uid="uid://booymi0sm5agv" path="res://scenes/entities/player/audio/end/p1_2.mp3" id="3_kh06p"]
 [ext_resource type="Texture2D" uid="uid://w1hu1mclnxvb" path="res://scenes/game/stage/textures/stage_wall.png" id="4_58hng"]
+[ext_resource type="AudioStream" uid="uid://djnlullwdngj0" path="res://scenes/entities/player/audio/end/p1_3.mp3" id="4_byt5i"]
 [ext_resource type="Texture2D" uid="uid://cadwm14lk70p8" path="res://scenes/game/stage/textures/stage_curtain.png" id="4_maqjl"]
 [ext_resource type="Texture2D" uid="uid://yy3qddd6vo4a" path="res://scenes/game/stage/textures/stage_ground.png" id="5_0qp5r"]
+[ext_resource type="AudioStream" uid="uid://k5kc2v3tcfhs" path="res://scenes/entities/player/audio/end/p1_4.mp3" id="5_e4cy1"]
 [ext_resource type="SpriteFrames" uid="uid://dyjgbdtq1k55l" path="res://scenes/entities/player/animations/hilario.tres" id="6_0do5q"]
+[ext_resource type="AudioStream" uid="uid://bais2xa2cbgxl" path="res://scenes/entities/player/audio/end/p1_5.mp3" id="6_ey78q"]
 [ext_resource type="Texture2D" uid="uid://btcpaxk7ta8lx" path="res://scenes/game/stage/textures/stage_spectators.png" id="6_ow7ey"]
 [ext_resource type="Texture2D" uid="uid://qc82260tth0p" path="res://scenes/entities/microphone/textures/microphone.png" id="7_r7cnb"]
+[ext_resource type="AudioStream" uid="uid://ijhsfpo4xy23" path="res://scenes/entities/player/audio/end/p1_6.mp3" id="7_wj4i7"]
+[ext_resource type="AudioStream" uid="uid://dcbqoxk2tfq86" path="res://scenes/entities/player/audio/end/p2_1.mp3" id="8_ykx2a"]
 [ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="9_ta41r"]
+[ext_resource type="AudioStream" uid="uid://wvmf8sa4kvwt" path="res://scenes/entities/player/audio/end/p2_2.mp3" id="9_wspdd"]
 [ext_resource type="Texture2D" uid="uid://ohfdpcaerr5y" path="res://scenes/ui/hud/textures/draw_en.PNG" id="10_arx3c"]
+[ext_resource type="AudioStream" uid="uid://c5u3siw2nmxx0" path="res://scenes/entities/player/audio/end/p2_3.mp3" id="10_ec4ut"]
 [ext_resource type="Texture2D" uid="uid://cgxm8g17jasgj" path="res://scenes/ui/hud/textures/win_en.PNG" id="10_kev4i"]
+[ext_resource type="AudioStream" uid="uid://bst651sf18ao2" path="res://scenes/entities/player/audio/end/p2_4.mp3" id="11_1rw8j"]
+[ext_resource type="AudioStream" uid="uid://bgr6x2ddylru6" path="res://scenes/entities/player/audio/end/p2_5.mp3" id="12_qdlh5"]
+[ext_resource type="AudioStream" uid="uid://ct3t5jf3qf4cs" path="res://data/sfx/clap.wav" id="12_vta8o"]
+[ext_resource type="AudioStream" uid="uid://cttm37w4yrfmw" path="res://scenes/entities/microphone/sfx/boo.mp3" id="13_mdo8b"]
+[ext_resource type="Texture2D" uid="uid://dnyjdupcj0vbf" path="res://credits.png" id="23_gjofv"]
 
 [sub_resource type="Animation" id="Animation_hoppw"]
 length = 0.001
@@ -121,7 +135,7 @@ _data = {
 "open": SubResource("Animation_viwwh")
 }
 
-[node name="Victory" type="CanvasLayer" node_paths=PackedStringArray("_uiNode", "_player1", "_player2", "_tomatoes", "_winTexture", "_loseTexture")]
+[node name="Victory" type="CanvasLayer" node_paths=PackedStringArray("_uiNode", "_player1", "_player2", "_tomatoes", "_winTexture", "_loseTexture", "_finalJoke", "_clap", "_boo")]
 script = ExtResource("1_jdodh")
 _uiNode = NodePath("UI")
 _player1 = NodePath("Stage/Player1")
@@ -129,6 +143,11 @@ _player2 = NodePath("Stage/Player2")
 _tomatoes = NodePath("Stage/TomatoesSpawner")
 _winTexture = NodePath("UI/Win/Victory")
 _loseTexture = NodePath("UI/Win/Defeat")
+_finalJoke = NodePath("FinalJoke")
+_clap = NodePath("Clap")
+_boo = NodePath("Boo")
+_p1AudioEnd = Array[AudioStream]([ExtResource("2_ycu4a"), ExtResource("3_kh06p"), ExtResource("4_byt5i"), ExtResource("5_e4cy1"), ExtResource("6_ey78q"), ExtResource("7_wj4i7")])
+_p2AudioEnd = Array[AudioStream]([ExtResource("8_ykx2a"), ExtResource("9_wspdd"), ExtResource("10_ec4ut"), ExtResource("11_1rw8j"), ExtResource("12_qdlh5")])
 
 [node name="Stage" type="Node2D" parent="."]
 
@@ -220,8 +239,28 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("10_arx3c")
 
+[node name="Credits" type="TextureRect" parent="UI/Win"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_gjofv")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_hnwxr")
 }
 autoplay = "open"
+
+[node name="FinalJoke" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+
+[node name="Clap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_vta8o")
+volume_db = -25.0
+
+[node name="Boo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_mdo8b")
+volume_db = -25.0

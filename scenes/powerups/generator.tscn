@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3raiwe4k4j1x"]
+[gd_scene load_steps=11 format=3 uid="uid://b3raiwe4k4j1x"]
 
 [ext_resource type="Texture2D" uid="uid://dctxranbymlta" path="res://scenes/powerups/textures/generator.png" id="1_inaij"]
 [ext_resource type="Script" path="res://src/Powerups/Generator.cs" id="1_rbnk2"]
+[ext_resource type="Texture2D" uid="uid://bk4v46dcncn6y" path="res://scenes/powerups/textures/vfx/plaft.PNG" id="2_3xiuk"]
+[ext_resource type="PackedScene" uid="uid://1ujlsves0k3b" path="res://scenes/entities/vfx/vfx.tscn" id="3_1mhbv"]
 [ext_resource type="AudioStream" uid="uid://c6intm58anjsd" path="res://scenes/powerups/sfx/generator.wav" id="3_4u8xx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2rg7g"]
@@ -40,6 +42,9 @@ radius = 32.0
 script = ExtResource("1_rbnk2")
 _hitbox = NodePath("Sprite/Area2D")
 _moveSpeed = 800.0
+_screenShake = 30.0
+_vfxTexture = ExtResource("2_3xiuk")
+_vfxScene = ExtResource("3_1mhbv")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -40)

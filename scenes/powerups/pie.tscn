@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://jnbpnosccdel"]
+[gd_scene load_steps=17 format=3 uid="uid://jnbpnosccdel"]
 
 [ext_resource type="Script" path="res://src/Powerups/Pie.cs" id="1_7ky4c"]
 [ext_resource type="Texture2D" uid="uid://bc334771pspqq" path="res://scenes/powerups/textures/pie.png" id="1_osr2w"]
+[ext_resource type="Texture2D" uid="uid://bk4v46dcncn6y" path="res://scenes/powerups/textures/vfx/plaft.PNG" id="3_u3r7o"]
 [ext_resource type="AudioStream" uid="uid://0qqjcvr5yhpu" path="res://scenes/powerups/sfx/pie.wav" id="3_xxudm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xuks8"]
@@ -84,7 +85,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_fbii3"]
 radius = 32.0
 
-[node name="Pie" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightPie", "_leftPie", "_rightSprite", "_leftSprite", "_audioStreamPlayer")]
+[node name="Pie" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightPie", "_leftPie", "_rightSprite", "_leftSprite", "_audioStreamPlayer", "_vfxRight", "_vfxLeft")]
 script = ExtResource("1_7ky4c")
 _hitboxLeft = NodePath("Left/Area2D")
 _hitboxRight = NodePath("Right/Area2D")
@@ -94,6 +95,8 @@ _rightSprite = NodePath("Right/Area2D/AnimatedSprite2D")
 _leftSprite = NodePath("Left/Area2D/AnimatedSprite2D")
 _moveSpeed = 700.0
 _audioStreamPlayer = NodePath("Hit")
+_vfxRight = NodePath("Right/VFX")
+_vfxLeft = NodePath("Left/VFX")
 
 [node name="Left" type="AnimatedSprite2D" parent="."]
 position = Vector2(-32, 400)
@@ -115,6 +118,11 @@ flip_h = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Left/Area2D"]
 shape = SubResource("CircleShape2D_g178j")
 
+[node name="VFX" type="Sprite2D" parent="Left"]
+visible = false
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_u3r7o")
+
 [node name="Right" type="AnimatedSprite2D" parent="."]
 position = Vector2(1312, 400)
 sprite_frames = SubResource("SpriteFrames_n6adv")
@@ -133,6 +141,11 @@ speed_scale = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Right/Area2D"]
 shape = SubResource("CircleShape2D_fbii3")
+
+[node name="VFX" type="Sprite2D" parent="Right"]
+visible = false
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_u3r7o")
 
 [node name="Hit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_xxudm")

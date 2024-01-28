@@ -45,6 +45,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	#region Flags
 
 	private bool _canJump;
+	public bool Pickle;
 	private PowerupResource CurrentPowerup { get; set; }
 
 	#endregion
@@ -327,6 +328,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	// Pickle State
 	private void EnterPickleState()
 	{
+		Pickle = true;
 		_hitBox.DisableArea();
 		_microphoneSensor.DisableArea();
 		AnimPlayer.Play("pickle");

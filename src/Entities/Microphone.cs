@@ -65,7 +65,7 @@ public partial class Microphone : Node2D
         if (_currentPlayerCharacter is null || !@event.IsPressed()) return;
         if (@event.IsAction(_currentActionListening) && _qteTimer.TimeLeft == 0.0)
         {
-            _attentionController.Score(10.0f * (_currentPlayerCharacter.PlayerCode == "p1_" ? 1.0f : -1.0f));
+            _attentionController.Score(5.0f * (_currentPlayerCharacter.PlayerCode == "p1_" ? 1.0f : -1.0f));
             _currentPlayerCharacter.PlayJoke();
             _correctAudio.Play();
             _buttonPanel.Hide();
@@ -114,7 +114,7 @@ public partial class Microphone : Node2D
     {
         if (area2D is not Tomato tomato) return;
         
-        tomato.QueueFree();
+        tomato.KillTomato();
     }
 
     private void StartQuickTimeEvent()

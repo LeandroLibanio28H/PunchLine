@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://chwr1dxv1h2if"]
+[gd_scene load_steps=8 format=3 uid="uid://chwr1dxv1h2if"]
 
 [ext_resource type="Script" path="res://src/Entities/Tomato.cs" id="1_wlvmn"]
 [ext_resource type="SpriteFrames" uid="uid://vxbwwqc3wncr" path="res://scenes/entities/tomato/animations/tomato1.tres" id="2_e8a2g"]
 [ext_resource type="PackedScene" uid="uid://c1xay7lr13pqi" path="res://scenes/entities/tomato/tomato_splat.tscn" id="2_rfusn"]
+[ext_resource type="Texture2D" uid="uid://b5tu8ege06jdr" path="res://scenes/powerups/textures/vfx/splash.png" id="3_65jqx"]
+[ext_resource type="PackedScene" uid="uid://1ujlsves0k3b" path="res://scenes/entities/vfx/vfx.tscn" id="4_wncya"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pldsl"]
 radius = 12.0
@@ -22,6 +24,8 @@ _maxMoveSpeed = 250.0
 _minLifeTime = 2.8
 _maxLifeTime = 3.5
 _screenShakeStrength = 5.0
+_vfxTexture = ExtResource("3_65jqx")
+_vfxScene = ExtResource("4_wncya")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)

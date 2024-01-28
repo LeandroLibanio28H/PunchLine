@@ -16,6 +16,8 @@ public partial class Cane : Node2D
     [Export] private AnimatedSprite2D _leftSprite;
     [Export] private float _moveSpeed;
     [Export] private AudioStreamPlayer _audioStreamPlayer;
+    [Export] private Sprite2D _vfxRight;
+    [Export] private Sprite2D _vfxLeft;
 
     private bool _going = true;
     private PlayerCharacter _player;
@@ -90,6 +92,8 @@ public partial class Cane : Node2D
         playerCharacter.ChangeState(PlayerCharacter.PlayerStates.Chair);
         
         _leftSprite.Play("walk");
+        _vfxLeft.Show();
+        _vfxRight.Show();
         _rightSprite.Play("walk");
 
         _going = false;

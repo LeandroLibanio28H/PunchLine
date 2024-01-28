@@ -12,6 +12,8 @@ public partial class Tomato : Area2D
     [Export] private float _minLifeTime;
     [Export] private float _maxLifeTime;
     [Export] private float _screenShakeStrength;
+    [Export] private Texture2D _vfxTexture;
+    [Export] private PackedScene _vfxScene;
 
     private Vector2 _direction;
     private RandomNumberGenerator _randomNumberGenerator;
@@ -50,8 +52,8 @@ public partial class Tomato : Area2D
     {
         GlobalPosition += _direction * _moveSpeed * (float)delta;
     }
-
-    private void KillTomato()
+    
+    public void KillTomato()
     {
         _active = false;
         var splat = _splatScene.Instantiate() as Node2D;
@@ -66,10 +68,18 @@ public partial class Tomato : Area2D
         if (!_active) return;
         _active = false;
         if (area2D.Owner is not PlayerCharacter playerCharacter) return;
+        if (playerCharacter.Pickle) return;
         
         playerCharacter.ChangeState(PlayerCharacter.PlayerStates.UnderControl);
         var main = GetTree().CurrentScene as MainScene;
         main?.ApplyCameraShake(_screenShakeStrength);
+        if (_vfxScene.Instantiate() is Vfx vfx)
+        {
+            vfx.Sprite.Texture = _vfxTexture;
+            vfx.Position = Position;
+            vfx.Scale = new Vector2(0.5f, 0.5f);
+            GetParent().AddChild(vfx);
+        }
         QueueFree();
     }
 }

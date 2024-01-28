@@ -16,6 +16,7 @@ public partial class GameController : Node2D
 	[Export] private PowerupSpawner _powerupSpawner;
 	[Export] private Node2D _playersNode;
 	[Export] private AudioStreamPlayer _audioStreamPlayer;
+	[Export] private AnimationPlayer _tutorialAnim;
 	
 	private DelegateStateMachine _stateMachine;
 	private AttentionController _attentionController;
@@ -57,6 +58,12 @@ public partial class GameController : Node2D
 
 	private void EnterWaitingState()
 	{
+		_tutorialAnim.AnimationFinished += EndTutorial;
+		_tutorialAnim.Play("default");
+	}
+
+	private void EndTutorial(StringName animName)
+	{
 		var curtainAnim = _curtain.GetFirstNodeOfType<AnimationPlayer>();
 		curtainAnim?.Play("open");
 		_mainMenuLayer.Hide();
@@ -76,6 +83,7 @@ public partial class GameController : Node2D
 			}
 		};
 	}
+	
 	private void WaitingState()
 	{
 		

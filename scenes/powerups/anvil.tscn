@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3hx2ymrmpuqp"]
+[gd_scene load_steps=7 format=3 uid="uid://d3hx2ymrmpuqp"]
 
 [ext_resource type="Script" path="res://src/Powerups/Anvil.cs" id="1_fhn1s"]
 [ext_resource type="Texture2D" uid="uid://e70a2knicnr7" path="res://scenes/powerups/textures/anvil.png" id="1_g4y1r"]
+[ext_resource type="PackedScene" uid="uid://1ujlsves0k3b" path="res://scenes/entities/vfx/vfx.tscn" id="3_aid8g"]
 [ext_resource type="AudioStream" uid="uid://t18mv8k2joqx" path="res://scenes/powerups/sfx/anvil.wav" id="3_ewdq2"]
+[ext_resource type="Texture2D" uid="uid://bnw84ormuss1c" path="res://scenes/powerups/textures/vfx/toin.PNG" id="4_df8fm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xq8mg"]
 radius = 32.0
@@ -12,6 +14,9 @@ script = ExtResource("1_fhn1s")
 _hitbox = NodePath("Hitbox")
 _moveSpeed = 400.0
 _audioStreamPlayer = NodePath("AudioStreamPlayer")
+_screenShake = 15.0
+_vfxTexture = ExtResource("4_df8fm")
+_vfxScene = ExtResource("3_aid8g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_g4y1r")

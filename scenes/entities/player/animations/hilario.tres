@@ -1,9 +1,10 @@
-[gd_resource type="SpriteFrames" load_steps=14 format=3 uid="uid://dyjgbdtq1k55l"]
+[gd_resource type="SpriteFrames" load_steps=15 format=3 uid="uid://dyjgbdtq1k55l"]
 
 [ext_resource type="Texture2D" uid="uid://bvuokpx6twcjp" path="res://scenes/entities/player/textures/hilario.png" id="1_ogi06"]
 [ext_resource type="Texture2D" uid="uid://11ekapvx7gvp" path="res://scenes/entities/player/textures/hilario_crouch.png" id="2_68qs3"]
 [ext_resource type="Texture2D" uid="uid://1xy45ea4npoj" path="res://scenes/entities/player/textures/hilario_jump.png" id="3_fasqc"]
 [ext_resource type="Texture2D" uid="uid://bcjwfr0kg5d4h" path="res://scenes/entities/player/textures/hilario_fall.png" id="3_yh14k"]
+[ext_resource type="Texture2D" uid="uid://cwqgvj4l7bsr0" path="res://scenes/entities/player/textures/pickle_hilario.png" id="5_yk2ub"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_72ow0"]
 atlas = ExtResource("1_ogi06")
@@ -90,6 +91,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_yk2ub")
+}],
+"loop": true,
+"name": &"pickle",
 "speed": 5.0
 }, {
 "frames": [{

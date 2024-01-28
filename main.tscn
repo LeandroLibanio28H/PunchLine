@@ -1,13 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqrsrug4v2b7e"]
+[gd_scene load_steps=6 format=3 uid="uid://dqrsrug4v2b7e"]
 
 [ext_resource type="PackedScene" uid="uid://bfapy2gpq6m55" path="res://scenes/game/Gameplay.tscn" id="1_0kkm7"]
 [ext_resource type="Script" path="res://src/MainScene.cs" id="1_332sl"]
 [ext_resource type="PackedScene" uid="uid://cile035al6b3o" path="res://scenes/ui/victory.tscn" id="3_i27mk"]
+[ext_resource type="AudioStream" uid="uid://bym67kd8bfht3" path="res://data/music/menu.wav" id="4_17qpw"]
+[ext_resource type="Script" path="res://src/Systems/Camera.cs" id="5_fg3r4"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("_scenes")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_scenes", "_camera")]
 script = ExtResource("1_332sl")
 _scenes = NodePath("Scenes")
 _gameplayScene = ExtResource("1_0kkm7")
 _victoryScene = ExtResource("3_i27mk")
+_camera = NodePath("Camera2D")
 
 [node name="Scenes" type="Node" parent="."]
+
+[node name="MenuBGS" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_17qpw")
+volume_db = -25.0
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("5_fg3r4")

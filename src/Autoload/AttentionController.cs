@@ -16,7 +16,7 @@ public partial class AttentionController : Node
     private bool _isAnyoneAtMic;
 
 
-    public float Attention { get; private set; } = 50.0f;
+    public float Attention { get; set; } = 50.0f;
     private const float MaxAttention = 100.0f;
 
 

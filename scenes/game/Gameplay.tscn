@@ -1,14 +1,25 @@
-[gd_scene load_steps=13 format=3 uid="uid://bfapy2gpq6m55"]
+[gd_scene load_steps=24 format=3 uid="uid://bfapy2gpq6m55"]
 
 [ext_resource type="PackedScene" uid="uid://bylpfd1dkg0v7" path="res://scenes/ui/hud/game_hud.tscn" id="1_ixya8"]
 [ext_resource type="Script" path="res://src/Gameplay/GameController.cs" id="1_rqpg3"]
+[ext_resource type="Texture2D" uid="uid://boy44bcl3eqe" path="res://logo.png" id="2_x1fm6"]
 [ext_resource type="PackedScene" uid="uid://k4x5lmkf307o" path="res://scenes/game/stage/stage.tscn" id="2_xn25o"]
 [ext_resource type="PackedScene" uid="uid://brrwe3veixhjv" path="res://scenes/entities/microphone/microphone.tscn" id="3_6dd42"]
 [ext_resource type="PackedScene" uid="uid://d03tgt58jw310" path="res://scenes/game/chair/chair.tscn" id="3_w6gis"]
 [ext_resource type="PackedScene" uid="uid://cn1fqr1sl4j8t" path="res://scenes/entities/player/player_character.tscn" id="4_ysacp"]
 [ext_resource type="PackedScene" uid="uid://cwi6qs0gghtt7" path="res://scenes/game/curtains/curtains.tscn" id="5_k55gr"]
 [ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="5_ypw2r"]
+[ext_resource type="PackedScene" uid="uid://cklc8tlte41pc" path="res://scenes/game/powerful_spawner/powerup_spawner.tscn" id="8_sbf25"]
 [ext_resource type="Texture2D" uid="uid://btcpaxk7ta8lx" path="res://scenes/game/stage/textures/stage_spectators.png" id="9_8cm3a"]
+[ext_resource type="PackedScene" uid="uid://4v76joo1qp8q" path="res://scenes/game/powerup_factory.tscn" id="11_fjyex"]
+[ext_resource type="PackedScene" uid="uid://d3hx2ymrmpuqp" path="res://scenes/powerups/anvil.tscn" id="12_b4kyr"]
+[ext_resource type="PackedScene" uid="uid://c1kke2ye5ho5" path="res://scenes/powerups/cane.tscn" id="13_ifl1g"]
+[ext_resource type="PackedScene" uid="uid://jnbpnosccdel" path="res://scenes/powerups/pie.tscn" id="14_mmqhy"]
+[ext_resource type="PackedScene" uid="uid://dywnxr4gwldx6" path="res://scenes/powerups/lookat.tscn" id="15_gae57"]
+[ext_resource type="PackedScene" uid="uid://b3raiwe4k4j1x" path="res://scenes/powerups/generator.tscn" id="16_24v2m"]
+[ext_resource type="PackedScene" uid="uid://bv6df5dno8s71" path="res://scenes/powerups/pickle.tscn" id="17_128a6"]
+[ext_resource type="AudioStream" uid="uid://ddwymgf4ipto3" path="res://data/music/gameplay_loop.wav" id="19_004x3"]
+[ext_resource type="AudioStream" uid="uid://ct3t5jf3qf4cs" path="res://data/sfx/clap.wav" id="20_io7od"]
 
 [sub_resource type="Animation" id="Animation_crysn"]
 length = 0.001
@@ -47,13 +58,16 @@ _data = {
 "default": SubResource("Animation_jq8or")
 }
 
-[node name="Gameplay" type="Node2D" node_paths=PackedStringArray("_mainMenuLayer", "_hud", "_curtain", "_tomatoesSpawner")]
+[node name="Gameplay" type="Node2D" node_paths=PackedStringArray("_mainMenuLayer", "_hud", "_curtain", "_tomatoesSpawner", "_powerupSpawner", "_playersNode", "_audioStreamPlayer")]
 process_mode = 3
 script = ExtResource("1_rqpg3")
 _mainMenuLayer = NodePath("MainScreen")
 _hud = NodePath("UI")
 _curtain = NodePath("Stage/Curtains")
 _tomatoesSpawner = NodePath("Stage/TomatoesSpawnPoint")
+_powerupSpawner = NodePath("Stage/PowerupSpawner")
+_playersNode = NodePath("Stage/Players")
+_audioStreamPlayer = NodePath("BGS")
 
 [node name="MainScreen" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -68,14 +82,13 @@ grow_vertical = 2
 
 [node name="PressAny" type="Label" parent="MainScreen/Control"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -34.5
-offset_bottom = 34.5
+anchor_bottom = 1.0
+offset_top = -69.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_colors/font_color = Color(0.996078, 0.941176, 0.352941, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
@@ -83,6 +96,12 @@ theme_override_font_sizes/font_size = 64
 text = "Press any key to start the game..."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Logo" type="TextureRect" parent="MainScreen/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_x1fm6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MainScreen"]
 libraries = {
@@ -117,6 +136,32 @@ position = Vector2(192, 448)
 [node name="PlayerCharacter2" parent="Stage/Players" groups=["Player", "Player2"] instance=ExtResource("4_ysacp")]
 position = Vector2(1088, 448)
 
+[node name="Powerups" type="Node2D" parent="Stage"]
+
+[node name="Anvil" parent="Stage/Powerups" groups=["Anvil"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("12_b4kyr")
+
+[node name="Cane" parent="Stage/Powerups" groups=["Cane"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("13_ifl1g")
+
+[node name="Pie" parent="Stage/Powerups" groups=["Pie"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("14_mmqhy")
+
+[node name="Lookat" parent="Stage/Powerups" groups=["Lookat"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("15_gae57")
+
+[node name="Generator" parent="Stage/Powerups" groups=["Generator"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("16_24v2m")
+
+[node name="Pickle" parent="Stage/Powerups" groups=["Pickle"] instance=ExtResource("11_fjyex")]
+position = Vector2(0, -32)
+_powerupScene = ExtResource("17_128a6")
+
 [node name="Microphone" parent="Stage" instance=ExtResource("3_6dd42")]
 position = Vector2(640, 368)
 
@@ -124,6 +169,8 @@ position = Vector2(640, 368)
 process_mode = 1
 position = Vector2(-16, -224)
 _spawnTime = 1.0
+
+[node name="PowerupSpawner" parent="Stage" instance=ExtResource("8_sbf25")]
 
 [node name="Curtains" parent="Stage" instance=ExtResource("5_k55gr")]
 
@@ -134,3 +181,12 @@ texture = ExtResource("9_8cm3a")
 [node name="Audience2" type="Sprite2D" parent="Audience"]
 position = Vector2(0, -40)
 texture = ExtResource("9_8cm3a")
+
+[node name="BGS" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_004x3")
+volume_db = -25.0
+
+[node name="Clap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_io7od")
+volume_db = -40.0
+autoplay = true

@@ -21,6 +21,7 @@ _minMoveSpeed = 150.0
 _maxMoveSpeed = 250.0
 _minLifeTime = 2.8
 _maxLifeTime = 3.5
+_screenShakeStrength = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)

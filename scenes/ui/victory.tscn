@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cile035al6b3o"]
+[gd_scene load_steps=15 format=3 uid="uid://cile035al6b3o"]
 
 [ext_resource type="SpriteFrames" uid="uid://dlby5p2ujgxug" path="res://scenes/entities/player/animations/casado.tres" id="1_b7diy"]
 [ext_resource type="Script" path="res://src/Hud/Victory.cs" id="1_jdodh"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://btcpaxk7ta8lx" path="res://scenes/game/stage/textures/stage_spectators.png" id="6_ow7ey"]
 [ext_resource type="Texture2D" uid="uid://qc82260tth0p" path="res://scenes/entities/microphone/textures/microphone.png" id="7_r7cnb"]
 [ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="9_ta41r"]
+[ext_resource type="Texture2D" uid="uid://ohfdpcaerr5y" path="res://scenes/ui/hud/textures/draw_en.PNG" id="10_arx3c"]
+[ext_resource type="Texture2D" uid="uid://cgxm8g17jasgj" path="res://scenes/ui/hud/textures/win_en.PNG" id="10_kev4i"]
 
 [sub_resource type="Animation" id="Animation_hoppw"]
 length = 0.001
@@ -119,13 +121,14 @@ _data = {
 "open": SubResource("Animation_viwwh")
 }
 
-[node name="Victory" type="CanvasLayer" node_paths=PackedStringArray("_uiNode", "_player1", "_player2", "_tomatoes", "_title")]
+[node name="Victory" type="CanvasLayer" node_paths=PackedStringArray("_uiNode", "_player1", "_player2", "_tomatoes", "_winTexture", "_loseTexture")]
 script = ExtResource("1_jdodh")
 _uiNode = NodePath("UI")
 _player1 = NodePath("Stage/Player1")
 _player2 = NodePath("Stage/Player2")
 _tomatoes = NodePath("Stage/TomatoesSpawner")
-_title = NodePath("UI/Win/Label")
+_winTexture = NodePath("UI/Win/Victory")
+_loseTexture = NodePath("UI/Win/Defeat")
 
 [node name="Stage" type="Node2D" parent="."]
 
@@ -196,36 +199,26 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="UI/Win"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 18.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.635294, 0.0901961, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 64
-text = "Our Winner of the Night!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="UI/Win"]
+[node name="Victory" type="TextureRect" parent="UI/Win"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -69.0
+offset_left = -15.0
+offset_top = -625.0
+offset_right = 15.0
+offset_bottom = 95.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.996078, 0.941176, 0.352941, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 48
-text = "Press Any Key to reset the game"
-horizontal_alignment = 1
-vertical_alignment = 1
+texture = ExtResource("10_kev4i")
+
+[node name="Defeat" type="TextureRect" parent="UI/Win"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_arx3c")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

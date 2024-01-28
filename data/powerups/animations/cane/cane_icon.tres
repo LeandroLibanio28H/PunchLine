@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://dq5hh8vs13jn8"]
+
+[ext_resource type="Texture2D" uid="uid://b34drw8pua1bl" path="res://data/powerups/textures/cane_icon.png" id="1_yjww3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cf08"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2w68d"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t00jh"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qocp"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p431i"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0j3o6"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01jw5"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywv6g"]
+atlas = ExtResource("1_yjww3")
+region = Rect2(448, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cf08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2w68d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t00jh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qocp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p431i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0j3o6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01jw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywv6g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

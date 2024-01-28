@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1xay7lr13pqi"]
+[gd_scene load_steps=8 format=3 uid="uid://c1xay7lr13pqi"]
 
 [ext_resource type="Texture2D" uid="uid://bl0rwlu08xvbr" path="res://scenes/entities/tomato/textures/splat.png" id="1_y5yiu"]
+[ext_resource type="AudioStream" uid="uid://bkosuool8qng6" path="res://scenes/entities/tomato/sfx/tomato.wav" id="2_h35a5"]
 
 [sub_resource type="Curve" id="Curve_nx8ga"]
 _data = [Vector2(0, 0.791209), 0.0, 0.0, 0, 0, Vector2(1, 0.252747), 0.0, 0.0, 0, 0]
@@ -80,3 +81,8 @@ libraries = {
 "": SubResource("AnimationLibrary_cj5f0")
 }
 autoplay = "default"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_h35a5")
+volume_db = -25.0
+autoplay = true

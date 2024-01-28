@@ -3,6 +3,8 @@ using Godot;
 using Godot.Collections;
 using GodotUtilities.Extensions;
 using GodotUtilities.Logic;
+using PunchLine.Resources;
+using PunchLine.Systems;
 
 namespace PunchLine.Entities;
 
@@ -13,19 +15,26 @@ public partial class PlayerCharacter : CharacterBody2D
 		Default,
 		Microphone,
 		UnderControl,
-		Chair
+		Chair,
+		Pickle
 	}
 	
 	[Export] private Area2D _hitBox;
-	[Export] private AnimatedSprite2D _animSprite;
-	[Export] private AnimationPlayer _animPlayer;
+	[Export] public AnimatedSprite2D AnimSprite;
+	[Export] public AnimationPlayer AnimPlayer;
+	[Export] private AnimatedSprite2D _powerupIcon;
 	[Export] private Area2D _microphoneSensor;
+	[Export] private Area2D _powerupSensor;
 	[Export] private Timer _controlTimer;
 	[Export] private float _moveSpeed;
 	[Export] private float _jumpStrength;
 	[Export] private Area2D _tomatoKiller;
 	[Export] private SpriteFrames _player1Sprite;
 	[Export] private SpriteFrames _player2Sprite;
+	[Export] private AudioStreamPlayer2D _audioStreamPlayer;
+	
+	[Export] private Array<AudioStream> _p1AudioStart;
+	[Export] private Array<AudioStream> _p2AudioStart;
 	
 	private float _gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	public string PlayerCode { get; private set; }
@@ -36,6 +45,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	#region Flags
 
 	private bool _canJump;
+	private PowerupResource CurrentPowerup { get; set; }
 
 	#endregion
 
@@ -44,6 +54,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	public override void _Ready()
 	{
+		CurrentPowerup = null;
 		_controlTimer.Timeout += () =>
 		{
 			_stateMachine.ChangeState(DefaultState);
@@ -57,16 +68,48 @@ public partial class PlayerCharacter : CharacterBody2D
 		_stateMachine.AddStates(CrouchedState, EnterCrouchedState, LeaveCrouchedState);
 		_stateMachine.AddStates(UnderControlState, EnterUnderControlState, LeaveUnderControlState);
 		_stateMachine.AddStates(SitDownState);
+		_stateMachine.AddStates(PickleState, EnterPickleState);
 		
 		_stateMachine.SetInitialState(SitDownState);
 		
 		PlayerCode = IsInGroup("Player1") ? "p1_" : "p2_";
-		_animSprite.SpriteFrames = PlayerCode == "p1_" ? _player1Sprite : _player2Sprite;
-		_animSprite.FlipH = IsInGroup("Player2");
+		AnimSprite.SpriteFrames = PlayerCode == "p1_" ? _player1Sprite : _player2Sprite;
+		AnimSprite.FlipH = IsInGroup("Player2");
+
+		_powerupSensor.AreaEntered += area =>
+		{
+			switch (area.Owner)
+			{
+				case PowerupProp powerup when CurrentPowerup is null:
+					CurrentPowerup = powerup.FileResource;
+					_powerupIcon.SpriteFrames = CurrentPowerup.Icon;
+					_powerupIcon.AddToGroup("Powerup");
+					powerup.QueueFree();
+					break;
+				case PlayerCharacter { CurrentPowerup: not null } playerCharacter when CurrentPowerup is null:
+					CurrentPowerup = playerCharacter.CurrentPowerup;
+					_powerupIcon.SpriteFrames = CurrentPowerup.Icon;
+					_powerupIcon.AddToGroup("Powerup");
+					playerCharacter.CurrentPowerup = null;
+					playerCharacter._powerupIcon.RemoveFromGroup("Powerup");
+					break;
+			}
+		};
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		_powerupIcon.Play("default");
+		if (CurrentPowerup is not null)
+		{
+			_powerupIcon.Show();
+			_powerupIcon.AddToGroup("Powerup");
+		}
+		else
+		{
+			_powerupIcon.Hide();
+			_powerupIcon.RemoveFromGroup("Powerup");
+		}
 		var velocity = Velocity;
 		if (!IsOnFloor())
 		{
@@ -82,11 +125,11 @@ public partial class PlayerCharacter : CharacterBody2D
 
 		Velocity = velocity;
 		
-		_animSprite.FlipH = Velocity.X switch
+		AnimSprite.FlipH = Velocity.X switch
 		{
 			< 0.0f => true,
 			> 0.0f => false,
-			_ => _animSprite.FlipH
+			_ => AnimSprite.FlipH
 		};
 		
 		_stateMachine.Update();
@@ -100,8 +143,17 @@ public partial class PlayerCharacter : CharacterBody2D
 		SetProcessUnhandledInput(false);
 	}
 
+	public void PlayJoke()
+	{
+		if (_audioStreamPlayer.Playing) return;
+		var audio = PlayerCode == "p1_" ? _p1AudioStart.PickRandom() : _p2AudioStart.PickRandom();
+		_audioStreamPlayer.Stream = audio;
+		_audioStreamPlayer.Play();
+	}
+	
 	public void ChangeState(PlayerStates state)
 	{
+		if (_stateMachine.GetCurrentState() == PickleState) return;
 		switch (state)
 		{
 			case PlayerStates.Default:
@@ -115,6 +167,9 @@ public partial class PlayerCharacter : CharacterBody2D
 				break;
 			case PlayerStates.Chair:
 				_stateMachine.ChangeState(SitDownState);
+				break;
+			case PlayerStates.Pickle:
+				_stateMachine.ChangeState(PickleState);
 				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -143,7 +198,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	{
 		if (IsOnFloor())
 		{
-			_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+			AnimSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
 			if (Input.IsActionJustPressed(PlayerCode + "jump"))
 			{
 				Velocity = new Vector2(Velocity.X, _jumpStrength);
@@ -151,6 +206,14 @@ public partial class PlayerCharacter : CharacterBody2D
 			else if (Input.IsActionPressed(PlayerCode + "crouch"))
 			{
 				_stateMachine.ChangeState(CrouchedState);
+			}
+			else if (Input.IsActionJustPressed(PlayerCode + "special_a"))
+			{
+				if (CurrentPowerup is null) return;
+				if (GetTree().GetFirstNodeInGroup(CurrentPowerup.Group) is not PowerupFactory powerupFactory) return;
+				
+				powerupFactory.ActivatePowerup(PlayerCode);
+				CurrentPowerup = null;
 			}
 		}
 		else
@@ -178,7 +241,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			_canJump = false;
 		}
 		
-		_animSprite.Play(Velocity.Y > 0.0f ? "fall" : "jump");
+		AnimSprite.Play(Velocity.Y > 0.0f ? "fall" : "jump");
 
 		MoveAndSlide();
 	}
@@ -191,10 +254,11 @@ public partial class PlayerCharacter : CharacterBody2D
 	// MicrophoneState
 	private void MicrophoneState()
 	{
-		_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+		CurrentPowerup = null;
+		AnimSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
 		if (IsOnFloor())
 		{
-			_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+			AnimSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
 			if (Input.IsActionJustPressed(PlayerCode + "jump"))
 			{
 				Velocity = new Vector2(Velocity.X, _jumpStrength);
@@ -212,21 +276,22 @@ public partial class PlayerCharacter : CharacterBody2D
 	// UnderControll
 	private void EnterUnderControlState()
 	{
-		_animPlayer.Play("blink");
+		AnimPlayer.Play("blink");
 		_hitBox.DisableArea();
 		_tomatoKiller.EnableArea();
 		_microphoneSensor.DisableArea();
+		CurrentPowerup = null;
 		
 		_controlTimer.Start();
 	}
 	private void UnderControlState()
 	{
-		_animSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
+		AnimSprite.Play(Velocity.Length() > 0.0f ? "walk" : "idle");
 		MoveAndSlide();
 	}
 	private void LeaveUnderControlState()
 	{
-		_animPlayer.Play("default");
+		AnimPlayer.Play("default");
 		_hitBox.EnableArea();	
 		_tomatoKiller.DisableArea();
 		_microphoneSensor.EnableArea();
@@ -235,13 +300,13 @@ public partial class PlayerCharacter : CharacterBody2D
 	// Crouched State
 	private void EnterCrouchedState()
 	{
-		_animSprite.Play("crouch");
+		AnimSprite.Play("crouch");
 		_hitBox.DisableArea();
 		_microphoneSensor.DisableArea();
 	}
 	private void CrouchedState()
 	{
-		_animSprite.Play("crouch");
+		AnimSprite.Play("crouch");
 		if (Input.IsActionJustReleased(PlayerCode + "crouch"))
 			_stateMachine.ChangeState(DefaultState);
 	}
@@ -254,7 +319,21 @@ public partial class PlayerCharacter : CharacterBody2D
 	// SitDown State
 	private void SitDownState()
 	{
-		_animSprite.Play("chair");
+		_hitBox.DisableArea();
+		_microphoneSensor.DisableArea();
+		AnimSprite.Play("chair");
+	}
+	
+	// Pickle State
+	private void EnterPickleState()
+	{
+		_hitBox.DisableArea();
+		_microphoneSensor.DisableArea();
+		AnimPlayer.Play("pickle");
+	}
+	private void PickleState()
+	{
+		
 	}
 	#endregion
 }

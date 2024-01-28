@@ -1,26 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://brrwe3veixhjv"]
+[gd_scene load_steps=12 format=3 uid="uid://brrwe3veixhjv"]
 
 [ext_resource type="Script" path="res://src/Entities/Microphone.cs" id="1_ulu88"]
 [ext_resource type="Texture2D" uid="uid://qc82260tth0p" path="res://scenes/entities/microphone/textures/microphone.png" id="2_xahi7"]
+[ext_resource type="Texture2D" uid="uid://cxtpgjkctqutc" path="res://scenes/entities/microphone/textures/radial.png" id="3_6xdos"]
+[ext_resource type="Texture2D" uid="uid://blishvmeecv6h" path="res://scenes/entities/microphone/textures/p1_special_a.png" id="3_os8tg"]
 [ext_resource type="PackedScene" uid="uid://bpmk5gl4xq75d" path="res://scenes/game/tomatoes_spawner/tomatoes_spawner.tscn" id="3_qkd1c"]
+[ext_resource type="AudioStream" uid="uid://b5vqhdg6w5dt6" path="res://scenes/entities/microphone/sfx/correct.wav" id="4_eqvuo"]
+[ext_resource type="AudioStream" uid="uid://dsw1yq4dsebhi" path="res://scenes/entities/microphone/sfx/wrong.wav" id="5_lsa11"]
+[ext_resource type="AudioStream" uid="uid://cttm37w4yrfmw" path="res://scenes/entities/microphone/sfx/boo.mp3" id="6_hcxne"]
+[ext_resource type="AudioStream" uid="uid://beu6a0cvqblo1" path="res://scenes/entities/microphone/sfx/laugh.mp3" id="7_srq1v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_104rc"]
 radius = 12.0
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6udpl"]
-load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_bi2gc"]
 radius = 100.0
 
-[node name="Microphone" type="Node2D" node_paths=PackedStringArray("_sensor", "_tomatoKiller", "_buttonPanel", "_borderPanel", "_tomatoesSpawner") groups=["Microphone"]]
+[node name="Microphone" type="Node2D" node_paths=PackedStringArray("_sensor", "_tomatoKiller", "_buttonPanel", "_borderPanel", "_tomatoesSpawner", "_correctAudio", "_wrongAudio", "_booAudio", "_laughAudio", "_qteTimer", "_timerProgress") groups=["Microphone"]]
 position = Vector2(0, -96)
 script = ExtResource("1_ulu88")
 _sensor = NodePath("Sensor")
 _tomatoKiller = NodePath("TomatoKiller")
-_buttonPanel = NodePath("Border/QuicktimeEventButton")
-_borderPanel = NodePath("Border")
+_buttonPanel = NodePath("QTEPanel/QuicktimeEventButton")
+_borderPanel = NodePath("QTEPanel/Border")
 _tomatoesSpawner = NodePath("TomatoesSpawner")
+_correctAudio = NodePath("Correct")
+_wrongAudio = NodePath("Wrong")
+_booAudio = NodePath("Boo")
+_laughAudio = NodePath("Laugh")
+_qteTimer = NodePath("QTETimer")
+_timerProgress = NodePath("QTEPanel/TimerProgress")
 
 [node name="Mesh" type="Node2D" parent="."]
 position = Vector2(3.05176e-05, 97)
@@ -40,20 +49,54 @@ collision_mask = 16
 position = Vector2(0, -64)
 shape = SubResource("CircleShape2D_104rc")
 
-[node name="Border" type="TextureRect" parent="."]
+[node name="QTEPanel" type="Control" parent="."]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -32.0
+offset_top = 128.0
+offset_right = 38.0
+offset_bottom = 198.0
+
+[node name="Border" type="TextureRect" parent="QTEPanel"]
+visible = false
 self_modulate = Color(0, 0, 0, 1)
-offset_left = -20.0
-offset_top = 133.0
-offset_right = 20.0
-offset_bottom = 173.0
-texture = SubResource("CompressedTexture2D_6udpl")
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_os8tg")
 expand_mode = 3
 
-[node name="QuicktimeEventButton" type="TextureRect" parent="Border"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="QuicktimeEventButton" type="TextureRect" parent="QTEPanel"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 3
+
+[node name="TimerProgress" type="TextureProgressBar" parent="QTEPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("3_6xdos")
 
 [node name="TomatoKiller" type="Area2D" parent="."]
 position = Vector2(3.05176e-05, 97)
@@ -67,3 +110,21 @@ shape = SubResource("CircleShape2D_bi2gc")
 position = Vector2(-696, -648)
 _group = "Microphone"
 _spawnTime = 0.1
+
+[node name="Correct" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_eqvuo")
+
+[node name="Wrong" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_lsa11")
+
+[node name="Boo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hcxne")
+volume_db = -15.0
+
+[node name="Laugh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_srq1v")
+volume_db = -10.0
+
+[node name="QTETimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

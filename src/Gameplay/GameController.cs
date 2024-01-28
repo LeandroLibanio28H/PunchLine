@@ -13,6 +13,9 @@ public partial class GameController : Node2D
 	[Export] private CanvasLayer _hud;
 	[Export] private Node2D _curtain;
 	[Export] private TomatoesSpawner _tomatoesSpawner;
+	[Export] private PowerupSpawner _powerupSpawner;
+	[Export] private Node2D _playersNode;
+	[Export] private AudioStreamPlayer _audioStreamPlayer;
 	
 	private DelegateStateMachine _stateMachine;
 	private AttentionController _attentionController;
@@ -29,7 +32,7 @@ public partial class GameController : Node2D
 		_stateMachine.AddStates(MenuState);
 		_stateMachine.AddStates(PausedState);
 		_stateMachine.AddStates(WaitingState, EnterWaitingState);
-		_stateMachine.AddStates(ContestState);
+		_stateMachine.AddStates(ContestState, EnterContestState);
 		_stateMachine.AddStates(GameOverState, EnterGameOverState);
 		
 		_stateMachine.SetInitialState(MenuState);
@@ -43,7 +46,7 @@ public partial class GameController : Node2D
 
 	private void MenuState()
 	{
-		if (Input.IsActionJustPressed("pause_resume"))
+		if (Input.IsAnythingPressed())
 			_stateMachine.ChangeState(WaitingState);
 	}
 
@@ -62,6 +65,7 @@ public partial class GameController : Node2D
 		GetTree().CreateTimer(6.0).Timeout += () =>
 		{
 			_tomatoesSpawner.Paused = false;
+			_powerupSpawner.Paused = false;
 			_stateMachine.ChangeState(ContestState);
 			_attentionController.ActivateGameplay();
 			var players = GetTree().GetNodesInGroup("Player");
@@ -77,6 +81,10 @@ public partial class GameController : Node2D
 		
 	}
 
+	private void EnterContestState()
+	{
+		_audioStreamPlayer.Play();
+	}
 	private void ContestState()
 	{
 		_hud.Show();
@@ -100,6 +108,7 @@ public partial class GameController : Node2D
 				playerCharacter.ChangeState(PlayerCharacter.PlayerStates.Default);
 		}
 		_tomatoesSpawner.Paused = true;
+		_powerupSpawner.Paused = true;
 		_hud.Hide();
 	}
 	private void GameOverState()

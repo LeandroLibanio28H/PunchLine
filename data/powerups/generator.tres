@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=4 format=3 uid="uid://djh2uscuigo3f"]
+
+[ext_resource type="Script" path="res://src/Resources/PowerupResource.cs" id="1_46cik"]
+[ext_resource type="SpriteFrames" uid="uid://ccqtv1w7pwnit" path="res://data/powerups/animations/generator/generator_icon.tres" id="1_phnt0"]
+[ext_resource type="SpriteFrames" uid="uid://byfs1y3qmdsv1" path="res://data/powerups/animations/generator/generator_throw.tres" id="2_0m18b"]
+
+[resource]
+script = ExtResource("1_46cik")
+Throw = ExtResource("2_0m18b")
+Icon = ExtResource("1_phnt0")
+Group = "Generator"

@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://b4wktligioq0a"]
+
+[ext_resource type="Texture2D" uid="uid://bxskaly4h1124" path="res://data/powerups/textures/pie_throw.png" id="1_fk5ky"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eugn4"]
+atlas = ExtResource("1_fk5ky")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8lro"]
+atlas = ExtResource("1_fk5ky")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2vgk"]
+atlas = ExtResource("1_fk5ky")
+region = Rect2(128, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eugn4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8lro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2vgk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

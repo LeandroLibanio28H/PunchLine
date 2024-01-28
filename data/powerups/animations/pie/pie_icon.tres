@@ -1,0 +1,60 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://6csq64uli8il"]
+
+[ext_resource type="Texture2D" uid="uid://bjvn6sbvrmcis" path="res://data/powerups/textures/pie_icon.png" id="1_5hsu0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dat0x"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1l3u"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejx2o"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gssqu"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iebuv"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edjby"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rirn7"]
+atlas = ExtResource("1_5hsu0")
+region = Rect2(384, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dat0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1l3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejx2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gssqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iebuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edjby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rirn7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

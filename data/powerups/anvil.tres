@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="Powerup" load_steps=3 format=3 uid="uid://5niessdgpdnq"]
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=4 format=3 uid="uid://dhv4gt1ixvscs"]
 
-[ext_resource type="SpriteFrames" uid="uid://dkedqgj8cuw2c" path="res://data/powerups/animations/anvil_icon.tres" id="1_r8jtc"]
-[ext_resource type="Script" path="res://src/Resources/Powerup.cs" id="2_yuls4"]
+[ext_resource type="Script" path="res://src/Resources/PowerupResource.cs" id="1_0j11x"]
+[ext_resource type="SpriteFrames" uid="uid://dkedqgj8cuw2c" path="res://data/powerups/animations/anvil/anvil_icon.tres" id="1_vtdsy"]
+[ext_resource type="SpriteFrames" uid="uid://clfcugr5eb3xp" path="res://data/powerups/animations/anvil/anvil_trhow.tres" id="2_7poo1"]
 
 [resource]
-script = ExtResource("2_yuls4")
-_icon = ExtResource("1_r8jtc")
-_group = ""
+script = ExtResource("1_0j11x")
+Throw = ExtResource("2_7poo1")
+Icon = ExtResource("1_vtdsy")
+Group = "Anvil"

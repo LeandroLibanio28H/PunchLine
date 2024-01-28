@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://clfcugr5eb3xp"]
+
+[ext_resource type="Texture2D" uid="uid://b1gtkx23ti06r" path="res://data/powerups/textures/anvil_throw.png" id="1_hg5sn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_it3qv"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gava"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_063ra"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwnlu"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tro2s"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar5gw"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a32ky"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5h4p"]
+atlas = ExtResource("1_hg5sn")
+region = Rect2(448, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_it3qv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gava")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_063ra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwnlu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tro2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ar5gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a32ky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5h4p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

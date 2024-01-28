@@ -1,0 +1,138 @@
+[gd_scene load_steps=16 format=3 uid="uid://jnbpnosccdel"]
+
+[ext_resource type="Script" path="res://src/Powerups/Pie.cs" id="1_7ky4c"]
+[ext_resource type="Texture2D" uid="uid://bc334771pspqq" path="res://scenes/powerups/textures/pie.png" id="1_osr2w"]
+[ext_resource type="AudioStream" uid="uid://0qqjcvr5yhpu" path="res://scenes/powerups/sfx/pie.wav" id="3_xxudm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuks8"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trwu0"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrfii"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4vtm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuks8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trwu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrfii")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_axgxa"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g178j"]
+radius = 32.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ft6i6"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bq0hk"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydame"]
+atlas = ExtResource("1_osr2w")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n6adv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ft6i6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bq0hk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydame")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xodc4"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fbii3"]
+radius = 32.0
+
+[node name="Pie" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightPie", "_leftPie", "_rightSprite", "_leftSprite", "_audioStreamPlayer")]
+script = ExtResource("1_7ky4c")
+_hitboxLeft = NodePath("Left/Area2D")
+_hitboxRight = NodePath("Right/Area2D")
+_rightPie = NodePath("Right")
+_leftPie = NodePath("Left")
+_rightSprite = NodePath("Right/Area2D/AnimatedSprite2D")
+_leftSprite = NodePath("Left/Area2D/AnimatedSprite2D")
+_moveSpeed = 700.0
+_audioStreamPlayer = NodePath("Hit")
+
+[node name="Left" type="AnimatedSprite2D" parent="."]
+position = Vector2(-32, 400)
+sprite_frames = SubResource("SpriteFrames_q4vtm")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="Left"]
+show_behind_parent = true
+collision_layer = 32768
+collision_mask = 32
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Left/Area2D"]
+position = Vector2(32, 24)
+sprite_frames = SubResource("SpriteFrames_axgxa")
+animation = &"walk"
+speed_scale = 3.0
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/Area2D"]
+shape = SubResource("CircleShape2D_g178j")
+
+[node name="Right" type="AnimatedSprite2D" parent="."]
+position = Vector2(1312, 400)
+sprite_frames = SubResource("SpriteFrames_n6adv")
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="Right"]
+show_behind_parent = true
+collision_layer = 32768
+collision_mask = 32
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Right/Area2D"]
+position = Vector2(-32, 28)
+sprite_frames = SubResource("SpriteFrames_xodc4")
+animation = &"walk"
+speed_scale = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/Area2D"]
+shape = SubResource("CircleShape2D_fbii3")
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xxudm")

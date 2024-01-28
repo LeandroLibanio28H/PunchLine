@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://bvl5kij1ysv0k"]
+
+[ext_resource type="Texture2D" uid="uid://c3puocqwdnesn" path="res://data/powerups/textures/pickle_icon.png" id="1_t832i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wf3l"]
+atlas = ExtResource("1_t832i")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1w00"]
+atlas = ExtResource("1_t832i")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjyje"]
+atlas = ExtResource("1_t832i")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay053"]
+atlas = ExtResource("1_t832i")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wf3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1w00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjyje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay053")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

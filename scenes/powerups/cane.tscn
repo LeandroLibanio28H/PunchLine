@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1kke2ye5ho5"]
+
+[ext_resource type="Texture2D" uid="uid://tk0x8i346eb1" path="res://scenes/powerups/textures/cane.png" id="1_p4ikw"]
+[ext_resource type="Script" path="res://src/Powerups/Cane.cs" id="1_ry8mc"]
+[ext_resource type="AudioStream" uid="uid://c2qwjdmd3rmvj" path="res://scenes/powerups/sfx/cane.mp3" id="3_0bnj5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rnpya"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pjc1y"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1nw77"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o2xu4"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Cane" type="Node2D" node_paths=PackedStringArray("_hitboxLeft", "_hitboxRight", "_rightCane", "_leftCane", "_rightSprite", "_leftSprite", "_audioStreamPlayer")]
+script = ExtResource("1_ry8mc")
+_hitboxLeft = NodePath("Left/Area2D")
+_hitboxRight = NodePath("Right/Area2D")
+_rightCane = NodePath("Right")
+_leftCane = NodePath("Left")
+_rightSprite = NodePath("Right/Player")
+_leftSprite = NodePath("Left/Player")
+_moveSpeed = 500.0
+_audioStreamPlayer = NodePath("AudioStreamPlayer")
+
+[node name="Left" type="Sprite2D" parent="."]
+position = Vector2(-16, 400)
+texture = ExtResource("1_p4ikw")
+offset = Vector2(-624, 0)
+
+[node name="Area2D" type="Area2D" parent="Left"]
+collision_layer = 32768
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/Area2D"]
+shape = SubResource("CircleShape2D_rnpya")
+
+[node name="Player" type="AnimatedSprite2D" parent="Left"]
+sprite_frames = SubResource("SpriteFrames_pjc1y")
+animation = &"walk"
+speed_scale = 3.0
+
+[node name="Right" type="Sprite2D" parent="."]
+position = Vector2(1296, 400)
+texture = ExtResource("1_p4ikw")
+offset = Vector2(624, 0)
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="Right"]
+collision_layer = 32768
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right/Area2D"]
+shape = SubResource("CircleShape2D_1nw77")
+
+[node name="Player" type="AnimatedSprite2D" parent="Right"]
+sprite_frames = SubResource("SpriteFrames_o2xu4")
+animation = &"walk"
+speed_scale = 3.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0bnj5")

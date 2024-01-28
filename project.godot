@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Punch!Line"
+config/version="0.999.42"
 config/tags=PackedStringArray("2hg", "ggj")
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
@@ -122,3 +123,4 @@ pause_resume={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.117647, 0.027451, 0.25098, 1)

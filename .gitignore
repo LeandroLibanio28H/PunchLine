@@ -3,6 +3,7 @@
 .vscode/
 .godot/
 .idea/
+bin/
 */bin/
 */obj/
 

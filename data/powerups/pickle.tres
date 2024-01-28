@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=4 format=3 uid="uid://c1a0qi8scsifq"]
+
+[ext_resource type="SpriteFrames" uid="uid://bvl5kij1ysv0k" path="res://data/powerups/animations/pickle/pickle_icon.tres" id="1_65jpt"]
+[ext_resource type="Script" path="res://src/Resources/PowerupResource.cs" id="1_qye4x"]
+[ext_resource type="SpriteFrames" uid="uid://7xie1d3yw7rd" path="res://data/powerups/animations/pickle/pickle_throw.tres" id="2_g42if"]
+
+[resource]
+script = ExtResource("1_qye4x")
+Throw = ExtResource("2_g42if")
+Icon = ExtResource("1_65jpt")
+Group = "Pickle"

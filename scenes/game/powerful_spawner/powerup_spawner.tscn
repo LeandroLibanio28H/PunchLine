@@ -1,0 +1,33 @@
+[gd_scene load_steps=10 format=3 uid="uid://cklc8tlte41pc"]
+
+[ext_resource type="Script" path="res://src/Systems/PowerupSpawner.cs" id="1_6yecg"]
+[ext_resource type="PackedScene" uid="uid://bxt0hkw4n5kl6" path="res://scenes/entities/powerup/powerup.tscn" id="2_qxenm"]
+[ext_resource type="Resource" uid="uid://dhv4gt1ixvscs" path="res://data/powerups/anvil.tres" id="3_2ylmt"]
+[ext_resource type="Resource" uid="uid://d1fdj8r4fk7a7" path="res://data/powerups/cane.tres" id="4_cxssh"]
+[ext_resource type="Resource" uid="uid://bicbqixkmiatb" path="res://data/powerups/pie.tres" id="5_iobbv"]
+[ext_resource type="Resource" uid="uid://cch05teg5vbnx" path="res://data/powerups/lookat.tres" id="6_xjeco"]
+[ext_resource type="Resource" uid="uid://djh2uscuigo3f" path="res://data/powerups/generator.tres" id="7_6x15l"]
+[ext_resource type="Resource" uid="uid://c1a0qi8scsifq" path="res://data/powerups/pickle.tres" id="8_82glp"]
+
+[sub_resource type="Curve2D" id="Curve2D_rr1ea"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 128, 896, 0, 0, 0, 0, 1152, 896)
+}
+point_count = 2
+
+[node name="PowerupSpawner" type="Path2D" node_paths=PackedStringArray("_spawnPoint", "_timer")]
+position = Vector2(0, -32)
+curve = SubResource("Curve2D_rr1ea")
+script = ExtResource("1_6yecg")
+_powerupScene = ExtResource("2_qxenm")
+_spawnPoint = NodePath("SpawnPoint")
+_timer = NodePath("Timer")
+_powerupResources = Array[Object]([ExtResource("3_2ylmt"), ExtResource("4_cxssh"), ExtResource("5_iobbv"), ExtResource("6_xjeco")])
+_generator = ExtResource("7_6x15l")
+_pickle = ExtResource("8_82glp")
+
+[node name="SpawnPoint" type="PathFollow2D" parent="."]
+position = Vector2(128, 896)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0

@@ -10,7 +10,8 @@ public partial class Victory : CanvasLayer
     [Export] private AnimatedSprite2D _player1;
     [Export] private AnimatedSprite2D _player2;
     [Export] private TomatoesSpawner _tomatoes;
-    [Export] private Label _title;
+    [Export] private TextureRect _winTexture;
+    [Export] private TextureRect _loseTexture;
 
     private AttentionController _attentionController;
 
@@ -21,20 +22,23 @@ public partial class Victory : CanvasLayer
 
         switch (_attentionController.Attention)
         {
-            case 100.0f:
+            case >= 100.0f:
                 _player1.Show();
                 _player2.Hide();
+                _tomatoes.QueueFree();
                 break;
-            case 0.0f:
+            case <= 0.0f:
                 _player1.Hide();
                 _player2.Show();
+                _tomatoes.QueueFree();
                 break;
             default:
                 _player1.Show();
                 _player2.Show();
                 _player1.Play("crouch");
                 _player2.Play("crouch");
-                _title.Text = Tr("Our losers of the night!");
+                _winTexture.Hide();
+                _loseTexture.Show();
                 break;
         }
     }

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3hx2ymrmpuqp"]
+
+[ext_resource type="Script" path="res://src/Powerups/Anvil.cs" id="1_fhn1s"]
+[ext_resource type="Texture2D" uid="uid://e70a2knicnr7" path="res://scenes/powerups/textures/anvil.png" id="1_g4y1r"]
+[ext_resource type="AudioStream" uid="uid://t18mv8k2joqx" path="res://scenes/powerups/sfx/anvil.wav" id="3_ewdq2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xq8mg"]
+radius = 32.0
+
+[node name="Anvil" type="Node2D" node_paths=PackedStringArray("_hitbox", "_audioStreamPlayer")]
+script = ExtResource("1_fhn1s")
+_hitbox = NodePath("Hitbox")
+_moveSpeed = 400.0
+_audioStreamPlayer = NodePath("AudioStreamPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_g4y1r")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 33
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_xq8mg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ewdq2")

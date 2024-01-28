@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://chltfuyhqoqqa"]
+
+[ext_resource type="Texture2D" uid="uid://3de4lbvsrx8v" path="res://data/powerups/textures/lookat_icon.png" id="1_3c7qp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy4ik"]
+atlas = ExtResource("1_3c7qp")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo4w0"]
+atlas = ExtResource("1_3c7qp")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nfih"]
+atlas = ExtResource("1_3c7qp")
+region = Rect2(96, 0, 48, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy4ik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo4w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nfih")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

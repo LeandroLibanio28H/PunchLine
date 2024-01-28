@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dywnxr4gwldx6"]
+
+[ext_resource type="Script" path="res://src/Powerups/Lookat.cs" id="1_o0ak2"]
+[ext_resource type="Texture2D" uid="uid://bh2m7gms1oykm" path="res://scenes/powerups/textures/lookat.png" id="2_wmk2x"]
+[ext_resource type="AudioStream" uid="uid://cwq2q1kgyrcc1" path="res://scenes/powerups/sfx/lookat.wav" id="3_pslw0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dm80a"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 95.96
+angle_max = 720.0
+radial_velocity_min = 193.55
+radial_velocity_max = 451.61
+gravity = Vector3(0, 98, 0)
+
+[node name="Lookat" type="Node2D" node_paths=PackedStringArray("_timer", "_audioStreamPlayer")]
+script = ExtResource("1_o0ak2")
+_timer = NodePath("Timer")
+_audioStreamPlayer = NodePath("AudioStreamPlayer")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(684, 372)
+scale = Vector2(12.72, 1)
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_dm80a")
+texture = ExtResource("2_wmk2x")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pslw0")
+volume_db = -10.0

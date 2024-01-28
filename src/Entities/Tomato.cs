@@ -11,6 +11,7 @@ public partial class Tomato : Area2D
     [Export] private float _maxMoveSpeed;
     [Export] private float _minLifeTime;
     [Export] private float _maxLifeTime;
+    [Export] private float _screenShakeStrength;
 
     private Vector2 _direction;
     private RandomNumberGenerator _randomNumberGenerator;
@@ -67,6 +68,8 @@ public partial class Tomato : Area2D
         if (area2D.Owner is not PlayerCharacter playerCharacter) return;
         
         playerCharacter.ChangeState(PlayerCharacter.PlayerStates.UnderControl);
+        var main = GetTree().CurrentScene as MainScene;
+        main?.ApplyCameraShake(_screenShakeStrength);
         QueueFree();
     }
 }
